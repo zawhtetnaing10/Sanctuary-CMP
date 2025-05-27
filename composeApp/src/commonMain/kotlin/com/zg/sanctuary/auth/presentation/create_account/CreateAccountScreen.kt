@@ -7,8 +7,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import com.zg.sanctuary.core.MARGIN_LARGE
+import com.zg.sanctuary.core.MARGIN_MEDIUM_2
 import com.zg.sanctuary.core.MARGIN_MEDIUM_3
 import com.zg.sanctuary.core.NORMAL_LABEL_COLOR
 import com.zg.sanctuary.core.TEXT_REGULAR
@@ -26,23 +28,31 @@ import sanctuary.composeapp.generated.resources.title_create_account
 
 @Composable
 fun CreateAccountRoute(
+    onClickBack: () -> Unit,
     onClickSignUp: () -> Unit
 ) {
     CreateAccountScreen(
         onClickSignUp = {
             onClickSignUp()
+        },
+        onClickBack = {
+            onClickBack()
         }
     )
 }
 
 @Composable
 fun CreateAccountScreen(
+    onClickBack: () -> Unit,
     onClickSignUp: () -> Unit
 ) {
     Scaffold(
         topBar = {
-            CommonAppbar(title = stringResource(Res.string.title_create_account), onTapBack = {})
-        }
+            CommonAppbar(title = stringResource(Res.string.title_create_account), onTapBack = {
+                onClickBack()
+            })
+        },
+        containerColor = Color.White
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding).padding(horizontal = MARGIN_MEDIUM_3)) {
             // Email
@@ -50,6 +60,7 @@ fun CreateAccountScreen(
                 inputText = "",
                 onInputChanged = {},
                 hint = stringResource(Res.string.email_hint),
+                modifier = Modifier.padding(top = MARGIN_MEDIUM_2)
             )
             // Password
             SanctuaryPasswordTextField(

@@ -7,6 +7,7 @@ import androidx.compose.ui.text.font.FontWeight
 import org.jetbrains.compose.resources.Font
 import sanctuary.composeapp.generated.resources.Res
 import sanctuary.composeapp.generated.resources.be_vietnam_pro_bold
+import sanctuary.composeapp.generated.resources.be_vietnam_pro_medium
 import sanctuary.composeapp.generated.resources.be_vietnam_pro_regular
 import sanctuary.composeapp.generated.resources.be_vietnam_pro_semi_bold
 
@@ -14,7 +15,8 @@ import sanctuary.composeapp.generated.resources.be_vietnam_pro_semi_bold
 fun BeVietnamProFontFamily() =  FontFamily(
     Font(Res.font.be_vietnam_pro_regular, FontWeight.Normal),
     Font(Res.font.be_vietnam_pro_semi_bold, FontWeight.SemiBold),
-    Font(Res.font.be_vietnam_pro_bold, FontWeight.Bold)
+    Font(Res.font.be_vietnam_pro_bold, FontWeight.Bold),
+    Font(Res.font.be_vietnam_pro_medium, FontWeight.Medium)
 )
 
 @Composable

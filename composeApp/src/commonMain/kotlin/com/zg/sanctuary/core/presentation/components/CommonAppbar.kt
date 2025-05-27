@@ -9,8 +9,10 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import com.zg.sanctuary.core.MARGIN_LARGE
 import com.zg.sanctuary.core.MARGIN_MEDIUM
@@ -20,12 +22,17 @@ import com.zg.sanctuary.core.TEXT_REGULAR_2XX
 @Composable
 fun CommonAppbar(
     title: String,
-    onTapBack: () -> Unit
+    onTapBack: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     CenterAlignedTopAppBar(
+        modifier = modifier,
         title = {
             Text(title, fontWeight = FontWeight.Bold, fontSize = TEXT_REGULAR_2XX)
         },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color.White
+        ),
         navigationIcon = {
             Icon(
                 Icons.AutoMirrored.Default.ArrowBack,

@@ -16,6 +16,7 @@
     <string name="date_of_birth">Date of birth</string>
     <string name="interests">Interests</string>
     <string name="next">Next</string>
+    <string name="complete_sign_up">Complete Sign Up</string>
     <string name="terms_of_service_login">By continuing, you agree to our Terms of Service to learn how we collect, use and share your data</string>
     <string name="terms_of_service_sign_up">By signing up, you agree to our Terms, Privacy Policy and Cookies Policy.</string>
 </resources>

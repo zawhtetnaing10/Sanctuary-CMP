@@ -20,6 +20,7 @@ fun SanctuaryTextField(
     inputText: String,
     onInputChanged: (String) -> Unit,
     hint: String,
+    isEnabled: Boolean = true,
     modifier: Modifier = Modifier
 ) {
     OutlinedTextField(
@@ -28,11 +29,14 @@ fun SanctuaryTextField(
         placeholder = {
             Text(hint, color = HINT_COLOR, fontSize = TEXT_REGULAR_2X)
         },
+        enabled = isEnabled,
         colors = OutlinedTextFieldDefaults.colors(
             focusedContainerColor = TEXT_FIELD_BACKGROUND_COLOR,
             unfocusedContainerColor = TEXT_FIELD_BACKGROUND_COLOR,
             focusedBorderColor = Color.Transparent,
-            unfocusedBorderColor = Color.Transparent
+            unfocusedBorderColor = Color.Transparent,
+            disabledContainerColor = TEXT_FIELD_BACKGROUND_COLOR,
+            disabledBorderColor = Color.Transparent
         ),
         shape = RoundedCornerShape(MARGIN_CARD_MEDIUM_2),
         modifier = modifier.fillMaxWidth()
