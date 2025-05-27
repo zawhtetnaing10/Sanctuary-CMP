@@ -3,4 +3,19 @@
     <string name="feed">Feed</string>
     <string name="show">SHOW</string>
     <string name="hide">HIDE</string>
+    <string name="username_or_email_hint">Username  or Email</string>
+    <string name="email_hint">Email</string>
+    <string name="password">Password</string>
+    <string name="no_account_label">Don't have an account?</string>
+    <string name="signup">Sign up</string>
+    <string name="login">Login</string>
+    <string name="title_create_account">Create account</string>
+    <string name="title_profile_information">Profile Information</string>
+    <string name="full_name_hint">Full Name</string>
+    <string name="user_name_hint">Username</string>
+    <string name="date_of_birth">Date of birth</string>
+    <string name="interests">Interests</string>
+    <string name="next">Next</string>
+    <string name="terms_of_service_login">By continuing, you agree to our Terms of Service to learn how we collect, use and share your data</string>
+    <string name="terms_of_service_sign_up">By signing up, you agree to our Terms, Privacy Policy and Cookies Policy.</string>
 </resources>

@@ -1,21 +1,10 @@
 package com.zg.sanctuary
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.Composable
+import com.zg.sanctuary.auth.presentation.login.LoginScreen
 import com.zg.sanctuary.core.BeVietnamProTypography
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-
-import sanctuary.composeapp.generated.resources.Res
-import sanctuary.composeapp.generated.resources.compose_multiplatform
 
 @Composable
 @Preview
@@ -23,18 +12,9 @@ fun App() {
     MaterialTheme(
         typography = BeVietnamProTypography()
     ) {
-        var showContent by remember { mutableStateOf(false) }
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
-            }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
-                }
-            }
-        }
+        LoginScreen(
+            onSignUpClicked = {},
+            onLoginClicked = {}
+        )
     }
 }

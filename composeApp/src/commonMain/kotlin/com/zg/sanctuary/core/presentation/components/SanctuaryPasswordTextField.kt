@@ -13,6 +13,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -43,7 +44,9 @@ fun SanctuaryPasswordTextField(
         },
         colors = OutlinedTextFieldDefaults.colors(
             focusedContainerColor = TEXT_FIELD_BACKGROUND_COLOR,
-            unfocusedContainerColor = TEXT_FIELD_BACKGROUND_COLOR
+            unfocusedContainerColor = TEXT_FIELD_BACKGROUND_COLOR,
+            focusedBorderColor = Color.Transparent,
+            unfocusedBorderColor = Color.Transparent
         ),
         visualTransformation = if(isPasswordHidden) PasswordVisualTransformation() else VisualTransformation.None,
         suffix = {
