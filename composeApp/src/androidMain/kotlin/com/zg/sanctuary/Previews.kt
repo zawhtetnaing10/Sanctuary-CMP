@@ -1,15 +1,21 @@
 package com.zg.sanctuary
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.zg.sanctuary.posts.presentation.PostListScreen
-import com.zg.sanctuary.posts.presentation.components.PostListAppbar
+import com.zg.sanctuary.core.presentation.components.SanctuaryPasswordTextField
+import com.zg.sanctuary.core.presentation.components.SanctuaryTextField
 
-@Preview
+@Preview(heightDp = 200)
 @Composable
-fun PostListScreenPreview(){
-    PostListScreen()
+fun SanctuaryPasswordTextFieldPreview(){
+    Box{
+        SanctuaryPasswordTextField(
+            inputText = "Password",
+            onInputChanged = {
+
+            },
+            hint = "Password"
+        )
+    }
 }

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
     <string name="feed">Feed</string>
+    <string name="show">SHOW</string>
+    <string name="hide">HIDE</string>
 </resources>
