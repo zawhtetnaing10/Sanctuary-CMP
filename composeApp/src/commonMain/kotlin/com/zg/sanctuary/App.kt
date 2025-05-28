@@ -14,9 +14,9 @@ fun App() {
     MaterialTheme(
         typography = BeVietnamProTypography()
     ) {
-        LoginScreen  (
-            onLoginClicked = {},
-            onSignUpClicked = {}
+        PersonalInformationScreen(
+            onClickNext = {},
+            onTapBack = {}
         )
     }
 }
