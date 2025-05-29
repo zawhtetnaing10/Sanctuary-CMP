@@ -29,11 +29,19 @@ import com.zg.sanctuary.core.MARGIN_SMALL
 import com.zg.sanctuary.core.MARGIN_XLARGE
 import com.zg.sanctuary.core.PROFILE_PICTURE_SIZE
 import com.zg.sanctuary.core.TEXT_FIELD_BACKGROUND_COLOR
+import dev.icerock.moko.permissions.DeniedAlwaysException
+import dev.icerock.moko.permissions.DeniedException
+import dev.icerock.moko.permissions.Permission
+import dev.icerock.moko.permissions.PermissionsController
+import dev.icerock.moko.permissions.camera.CAMERA
+import dev.icerock.moko.permissions.compose.BindEffect
+import dev.icerock.moko.permissions.compose.PermissionsControllerFactory
+import dev.icerock.moko.permissions.compose.rememberPermissionsControllerFactory
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import sanctuary.composeapp.generated.resources.Res
 import sanctuary.composeapp.generated.resources.camera_sanctuary
 import sanctuary.composeapp.generated.resources.placeholder_profile_picture
-import sanctuary.composeapp.generated.resources.sample_profile_picture
 
 @Composable
 fun ProfilePicture(
@@ -57,6 +65,11 @@ fun ProfilePicture(
             }
         }
     )
+
+    // Camera Permission
+    val factory: PermissionsControllerFactory = rememberPermissionsControllerFactory()
+    val cameraPermissionController: PermissionsController = remember(factory) { factory.createPermissionsController() }
+    BindEffect(cameraPermissionController)
 
     // UI
     Box(
@@ -91,8 +104,18 @@ fun ProfilePicture(
                 .background(TEXT_FIELD_BACKGROUND_COLOR, shape = CircleShape)
                 .clickable {
                     // TODO: - Show a dialog and ask the user whether to open camera or gallery.
+
                     // Open Gallery
-                    imagePickerLauncher.launch()
+                    //imagePickerLauncher.launch()
+
+                    // Ask for camera permission
+                    scope.launch {
+                        askCameraPermissionRecursive(
+                            cameraPermissionController,
+                            onPermissionGranted = {
+                                println("Permission Granted. Received in Callback.")
+                            })
+                    }
                 }
         ) {
             Image(
@@ -104,7 +127,7 @@ fun ProfilePicture(
         }
 
         // Delete picture button
-        if(pickedImageBitmap != null) {
+        if (pickedImageBitmap != null) {
             Box(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
@@ -123,5 +146,20 @@ fun ProfilePicture(
                 )
             }
         }
+    }
+}
+
+/**
+ *
+ */
+suspend fun askCameraPermissionRecursive(cameraPermissionController: PermissionsController, onPermissionGranted: () -> Unit) {
+    try {
+        cameraPermissionController.providePermission(Permission.CAMERA)
+        onPermissionGranted.invoke()
+    } catch (deniedAlways: DeniedAlwaysException) {
+        println("Permission was always denied. Launch Settings")
+    } catch (denied: DeniedException) {
+        println("Permission was denied. Ask again")
+        askCameraPermissionRecursive(cameraPermissionController, onPermissionGranted)
     }
 }

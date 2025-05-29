@@ -43,6 +43,10 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.peekaboo.ui)
             implementation(libs.peekaboo.image.picker)
+
+            api(libs.permissions)
+            api(libs.permissions.compose)
+            implementation(libs.permissions.camera)
         }
     }
 }

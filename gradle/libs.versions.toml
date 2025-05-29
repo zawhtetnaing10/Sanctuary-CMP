@@ -17,6 +17,7 @@ kotlin = "2.1.20"
 kotlinx-coroutines = "1.10.2"
 
 peekaboo = "0.5.2"
+permissions = "0.19.1"
 
 
 [libraries]
@@ -36,6 +37,9 @@ kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-co
 
 peekaboo-ui = { module = "io.github.onseok:peekaboo-ui", version.ref = "peekaboo" }
 peekaboo-image-picker = { module = "io.github.onseok:peekaboo-image-picker", version.ref = "peekaboo" }
+permissions = { module = "dev.icerock.moko:permissions", version.ref = "permissions" }
+permissions-camera = { module = "dev.icerock.moko:permissions-camera", version.ref = "permissions" }
+permissions-compose = { module = "dev.icerock.moko:permissions-compose", version.ref = "permissions" }
 
 
 [plugins]
