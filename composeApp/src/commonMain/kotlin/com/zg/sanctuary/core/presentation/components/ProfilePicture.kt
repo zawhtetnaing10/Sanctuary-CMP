@@ -29,6 +29,7 @@ import com.zg.sanctuary.core.MARGIN_SMALL
 import com.zg.sanctuary.core.MARGIN_XLARGE
 import com.zg.sanctuary.core.PROFILE_PICTURE_SIZE
 import com.zg.sanctuary.core.TEXT_FIELD_BACKGROUND_COLOR
+import com.zg.sanctuary.core.platform_specific.rememberCameraManager
 import dev.icerock.moko.permissions.DeniedAlwaysException
 import dev.icerock.moko.permissions.DeniedException
 import dev.icerock.moko.permissions.Permission
@@ -70,6 +71,15 @@ fun ProfilePicture(
     val factory: PermissionsControllerFactory = rememberPermissionsControllerFactory()
     val cameraPermissionController: PermissionsController = remember(factory) { factory.createPermissionsController() }
     BindEffect(cameraPermissionController)
+
+    // Camera Manager
+    val cameraManager = rememberCameraManager(
+        onResult = { capturedImage ->
+            capturedImage?.let {
+                pickedImageBitmap = it.toImageBitmap()
+            }
+        }
+    )
 
     // UI
     Box(
@@ -114,6 +124,8 @@ fun ProfilePicture(
                             cameraPermissionController,
                             onPermissionGranted = {
                                 println("Permission Granted. Received in Callback.")
+                                // Open camera
+                                cameraManager.launch()
                             })
                     }
                 }
