@@ -1,6 +1,7 @@
 package com.zg.sanctuary.auth.presentation.personal_information
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -12,6 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import com.zg.sanctuary.core.MARGIN_56
 import com.zg.sanctuary.core.MARGIN_LARGE
@@ -58,6 +61,8 @@ fun PersonalInformationScreen(
 
     val scrollState = rememberScrollState()
 
+    val focusManager = LocalFocusManager.current
+
     Scaffold(
         topBar = {
             CommonAppbar(title = stringResource(Res.string.title_profile_information), onTapBack = { onTapBack() })
@@ -65,7 +70,15 @@ fun PersonalInformationScreen(
         containerColor = Color.White
     ) { innerPadding ->
         Column(
-            modifier = Modifier.verticalScroll(scrollState).padding(innerPadding).padding(horizontal = MARGIN_MEDIUM_3)
+            modifier = Modifier
+                .verticalScroll(scrollState)
+                .padding(innerPadding)
+                .padding(horizontal = MARGIN_MEDIUM_3)
+                .pointerInput (Unit) { // 'Unit' as key means this will not recompose unless the lambda changes
+                    detectTapGestures(onTap = {
+                        focusManager.clearFocus() // 3. Clear focus on any tap outside
+                    })
+                }
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 // Profile Picture

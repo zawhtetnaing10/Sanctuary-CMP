@@ -10,7 +10,7 @@
     <string name="signup">Sign up</string>
     <string name="login">Login</string>
     <string name="title_create_account">Create account</string>
-    <string name="title_profile_information">Profile Information</string>
+    <string name="title_profile_information">Personal Information</string>
     <string name="full_name_hint">Full Name</string>
     <string name="user_name_hint">Username</string>
     <string name="date_of_birth">Date of birth</string>
@@ -19,4 +19,7 @@
     <string name="complete_sign_up">Complete Sign Up</string>
     <string name="terms_of_service_login">By continuing, you agree to our Terms of Service to learn how we collect, use and share your data</string>
     <string name="terms_of_service_sign_up">By signing up, you agree to our Terms, Privacy Policy and Cookies Policy.</string>
+    <string name="camera_or_gallery">You can upload your profile picture using either your camera or your gallery. Which would you prefer?</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
 </resources>
