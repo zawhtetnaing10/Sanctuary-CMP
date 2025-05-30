@@ -1,5 +1,5 @@
 [versions]
-agp = "8.6.0"
+agp = "8.5.0"
 android-compileSdk = "35"
 android-minSdk = "24"
 android-targetSdk = "35"
@@ -18,7 +18,7 @@ kotlinx-coroutines = "1.10.2"
 
 peekaboo = "0.5.2"
 permissions = "0.19.1"
-navigationCompose = "2.9.0-beta01"
+navigationCompose = "2.8.0-alpha10"
 kotlinSerialization = "1.7.3"
 
 

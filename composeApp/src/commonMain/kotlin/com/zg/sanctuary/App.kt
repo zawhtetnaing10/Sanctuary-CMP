@@ -1,5 +1,9 @@
 package com.zg.sanctuary
 
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
@@ -25,7 +29,11 @@ fun App() {
             startDestination = AppRoute.AuthGraph
         ) {
             navigation<AppRoute.AuthGraph>(startDestination = AppRoute.Login) {
-                composable<AppRoute.Login> {
+                composable<AppRoute.Login>(
+                    enterTransition = { slideInHorizontally(initialOffsetX = { it / 2 }) },
+                    popEnterTransition = { slideInHorizontally(initialOffsetX = { -it / 4 }) },
+                    popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) }
+                ) {
                     LoginRoute(
                         onLoginClicked = {},
                         onSignUpClicked = {
@@ -33,7 +41,11 @@ fun App() {
                         }
                     )
                 }
-                composable<AppRoute.CreateAccount> {
+                composable<AppRoute.CreateAccount>(
+                    enterTransition = { slideInHorizontally(initialOffsetX = { it / 2 }) },
+                    popEnterTransition = { slideInHorizontally(initialOffsetX = { -it / 4 }) },
+                    popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) }
+                ) {
                     CreateAccountRoute(
                         onClickBack = {
                             navController.navigateUp()
@@ -43,7 +55,11 @@ fun App() {
                         }
                     )
                 }
-                composable<AppRoute.PersonalInformation> {
+                composable<AppRoute.PersonalInformation>(
+                    enterTransition = { slideInHorizontally(initialOffsetX = { it / 2 }) },
+                    popEnterTransition = { slideInHorizontally(initialOffsetX = { -it / 4 }) },
+                    popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) }
+                ) {
                     PersonalInformationScreen(
                         onClickNext = {},
                         onTapBack = {
