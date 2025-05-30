@@ -1,5 +1,5 @@
 [versions]
-agp = "8.5.2"
+agp = "8.6.0"
 android-compileSdk = "35"
 android-minSdk = "24"
 android-targetSdk = "35"
@@ -18,6 +18,8 @@ kotlinx-coroutines = "1.10.2"
 
 peekaboo = "0.5.2"
 permissions = "0.19.1"
+navigationCompose = "2.9.0-beta01"
+kotlinSerialization = "1.7.3"
 
 
 [libraries]
@@ -41,6 +43,9 @@ permissions = { module = "dev.icerock.moko:permissions", version.ref = "permissi
 permissions-camera = { module = "dev.icerock.moko:permissions-camera", version.ref = "permissions" }
 permissions-compose = { module = "dev.icerock.moko:permissions-compose", version.ref = "permissions" }
 
+jetbrains-compose-navigation = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref= "navigationCompose"}
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinSerialization" }
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -48,3 +53,4 @@ androidLibrary = { id = "com.android.library", version.ref = "agp" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
