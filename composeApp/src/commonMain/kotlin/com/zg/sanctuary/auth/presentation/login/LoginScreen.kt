@@ -12,6 +12,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,18 +21,22 @@ import com.zg.sanctuary.core.LOGO_BOTTOM_SPACING
 import com.zg.sanctuary.core.LOGO_HEIGHT
 import com.zg.sanctuary.core.LOGO_WIDTH
 import com.zg.sanctuary.core.MARGIN_LARGE
-import com.zg.sanctuary.core.MARGIN_MEDIUM_2
 import com.zg.sanctuary.core.MARGIN_MEDIUM_3
 import com.zg.sanctuary.core.MARGIN_XLARGE
 import com.zg.sanctuary.core.MARGIN_XXLARGE
 import com.zg.sanctuary.core.NORMAL_LABEL_COLOR
 import com.zg.sanctuary.core.TEXT_REGULAR
+import com.zg.sanctuary.core.network.onError
+import com.zg.sanctuary.core.network.onSuccess
 import com.zg.sanctuary.core.presentation.components.SanctuaryAccentButton
 import com.zg.sanctuary.core.presentation.components.SanctuaryPasswordTextField
 import com.zg.sanctuary.core.presentation.components.SanctuaryPrimaryButton
 import com.zg.sanctuary.core.presentation.components.SanctuaryTextField
+import com.zg.sanctuary.interests.data.network.api_services.impls.InterestApiServiceImpl
+import com.zg.sanctuary.interests.data.repositories.InterestRepository
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.koinInject
 import sanctuary.composeapp.generated.resources.Res
 import sanctuary.composeapp.generated.resources.login
 import sanctuary.composeapp.generated.resources.no_account_label
@@ -65,6 +70,26 @@ fun LoginScreen(
 ) {
 
     val scrollSate = rememberScrollState()
+
+    val interestRepo : InterestRepository = koinInject()
+
+    // TODO: - Delete this after testing
+    LaunchedEffect(Unit) {
+//        interestRepo.getAllInterestsFromNetwork(
+//            onSuccess = { interests ->
+//                interests.forEach {
+//                    println("Interest =====> ${it.name}")
+//                }
+//            },
+//            onFailure = { errorMessage ->
+//                println("Get interests failed ====> $errorMessage")
+//            }
+//        )
+
+        interestRepo.getAllInterestsFromDB().forEach {
+            println("Interest from db =====> ${it.name}")
+        }
+    }
 
     Surface(modifier = Modifier.fillMaxSize(), color = Color.White) {
         Column(
