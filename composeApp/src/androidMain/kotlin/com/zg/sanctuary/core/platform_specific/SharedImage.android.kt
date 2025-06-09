@@ -16,7 +16,6 @@ actual class SharedImage(private val bitmap: Bitmap?) {
             )
             byteArrayOutputStream.toByteArray()
         } else {
-            println("toByteArray null")
             null
         }
     }
@@ -26,7 +25,6 @@ actual class SharedImage(private val bitmap: Bitmap?) {
         return if (byteArray != null) {
             return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size).asImageBitmap()
         } else {
-            println("toImageBitmap null")
             null
         }
     }
