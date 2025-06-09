@@ -60,7 +60,6 @@ fun LoginRoute(
         viewModel.events.collectLatest {
             when (it) {
                 is LoginEvent.NavigateToHome -> {
-                    println("Navigate to home right now. From View Model")
                     onNavToHomeTriggered()
                 }
 
@@ -81,7 +80,7 @@ fun LoginRoute(
 @Composable
 fun LoginScreen(
     state: LoginState,
-    onAction: (LoginActions) -> Unit ,
+    onAction: (LoginActions) -> Unit,
 ) {
 
     val scrollSate = rememberScrollState()
@@ -93,7 +92,7 @@ fun LoginScreen(
     if (state.error.isNotEmpty()) {
         ErrorDialog(
             onDismissRequest = {
-                onAction(LoginActions.OnErrorDialogDismissed)
+                onAction(LoginActions.OnErrorDialogDismissed())
             },
             message = state.error
         )
@@ -136,7 +135,7 @@ fun LoginScreen(
             SanctuaryPrimaryButton(
                 title = stringResource(Res.string.login),
                 onClick = {
-                    onAction(LoginActions.OnLoginTapped)
+                    onAction(LoginActions.OnLoginTapped())
                 },
                 modifier = Modifier.padding(top = MARGIN_LARGE).fillMaxWidth()
             )
@@ -154,7 +153,7 @@ fun LoginScreen(
             SanctuaryAccentButton(
                 title = stringResource(Res.string.signup),
                 onClick = {
-                    onAction(LoginActions.OnSignUpTapped)
+                    onAction(LoginActions.OnSignUpTapped())
                 },
                 modifier = Modifier.padding(top = MARGIN_LARGE).fillMaxWidth()
             )

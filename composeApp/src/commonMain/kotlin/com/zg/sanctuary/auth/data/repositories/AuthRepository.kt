@@ -24,4 +24,19 @@ class AuthRepository(
             onFailure(it.error)
         }
     }
+
+    suspend fun createAccount(email: String, password: String, onSuccess: (User) -> Unit, onFailure: (String) -> Unit) {
+        authApiService.createAccount(
+            email = email,
+            password = password
+        ).onSuccess {
+            println("Register successful ====> $it")
+            onSuccess(it)
+            // Delete all users from db then save. Only one user can be logged in at any time.
+            database.userDao().deleteAllUsers()
+            database.userDao().saveUser(it)
+        }.onError {
+            onFailure(it.error)
+        }
+    }
 }

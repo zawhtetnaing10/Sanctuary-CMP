@@ -4,11 +4,13 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.zg.sanctuary.auth.presentation.create_account.CreateAccountRoute
+import com.zg.sanctuary.auth.presentation.create_account.CreateAccountViewModel
 import com.zg.sanctuary.auth.presentation.login.LoginRoute
 import com.zg.sanctuary.auth.presentation.login.LoginViewModel
 import com.zg.sanctuary.auth.presentation.personal_information.PersonalInformationScreen
@@ -50,11 +52,13 @@ fun App() {
                     popEnterTransition = { slideInHorizontally(initialOffsetX = { -it / 4 }) },
                     popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) }
                 ) {
+                    val createAccountViewModel = koinViewModel<CreateAccountViewModel>()
                     CreateAccountRoute(
-                        onClickBack = {
+                        viewModel = createAccountViewModel,
+                        onNavigateBackTriggered = {
                             navController.navigateUp()
                         },
-                        onClickSignUp = {
+                        onNavigateToPersonalInfoTriggered = {
                             navController.navigate(AppRoute.PersonalInformation)
                         }
                     )

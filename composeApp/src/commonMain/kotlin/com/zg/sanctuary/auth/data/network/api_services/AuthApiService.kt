@@ -6,4 +6,5 @@ import com.zg.sanctuary.auth.domain.User
 
 interface AuthApiService {
     suspend fun login(email : String, password : String) : SanctuaryResult<User, SanctuaryError>
+    suspend fun createAccount(email : String, password : String) : SanctuaryResult<User, SanctuaryError>
 }
