@@ -1,4 +1,4 @@
-package com.zg.sanctuary.core.network
+package com.zg.sanctuary.core.data.network
 
 import com.zg.sanctuary.core.domain.SanctuaryError
 import com.zg.sanctuary.core.domain.SanctuaryErrorEnums

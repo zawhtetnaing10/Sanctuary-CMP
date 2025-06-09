@@ -1,4 +1,4 @@
-package com.zg.sanctuary.core.network
+package com.zg.sanctuary.core.data.network
 
 sealed interface SanctuaryResult<out D, out E> {
     data class Success<out D>(val data: D) : SanctuaryResult<D, Nothing>

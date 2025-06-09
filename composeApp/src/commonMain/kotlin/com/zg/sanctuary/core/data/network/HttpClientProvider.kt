@@ -1,4 +1,4 @@
-package com.zg.sanctuary.core.network
+package com.zg.sanctuary.core.data.network
 
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.DefaultRequest

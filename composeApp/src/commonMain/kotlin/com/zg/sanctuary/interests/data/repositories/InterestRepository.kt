@@ -1,11 +1,9 @@
 package com.zg.sanctuary.interests.data.repositories
 
-import com.zg.sanctuary.core.network.SanctuaryResult
-import com.zg.sanctuary.core.network.onError
-import com.zg.sanctuary.core.network.onSuccess
+import com.zg.sanctuary.core.data.network.onError
+import com.zg.sanctuary.core.data.network.onSuccess
 import com.zg.sanctuary.core.persistence.SanctuaryDatabase
 import com.zg.sanctuary.interests.data.network.api_services.InterestsApiService
-import com.zg.sanctuary.interests.data.network.api_services.impls.InterestApiServiceImpl
 import com.zg.sanctuary.interests.domain.Interest
 
 class InterestRepository(

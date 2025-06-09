@@ -1,7 +1,7 @@
 package com.zg.sanctuary.posts.domain
 
 import com.zg.sanctuary.comments.domain.Comment
-import com.zg.sanctuary.user.domain.User
+import com.zg.sanctuary.auth.domain.User
 
 data class Post(
     val id : Int,

@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SanctuaryError(
-    var errorType : SanctuaryErrorEnums,
+    var errorType : SanctuaryErrorEnums? = null,
     @SerialName("error")
     val error: String
 )

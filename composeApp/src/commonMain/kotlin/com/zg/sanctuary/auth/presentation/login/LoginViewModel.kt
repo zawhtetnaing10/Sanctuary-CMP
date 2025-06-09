@@ -2,16 +2,20 @@ package com.zg.sanctuary.auth.presentation.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.zg.sanctuary.auth.data.repositories.AuthRepository
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class LoginViewModel() : ViewModel() {
+class LoginViewModel(
+    private val authRepo : AuthRepository
+) : ViewModel() {
 
     // State
     private val _state = MutableStateFlow<LoginState>(LoginState())
@@ -21,61 +25,54 @@ class LoginViewModel() : ViewModel() {
     private val _events = Channel<LoginEvent>()
     val events = _events.receiveAsFlow()
 
-    fun onEmailChanged(email: String) {
-        _state.update {
-            it.copy(email = email)
-        }
-    }
-
-    fun onPasswordChanged(password: String) {
-        _state.update {
-            it.copy(password = password)
-        }
-    }
-
-    fun onErrorDialogDismissed() {
-        _state.update {
-            it.copy(error = "")
-        }
-    }
-
-    fun onLoginTapped() {
-        // TODO: - Make login network call and Navigate to Home Screen
-        println("Login button tapped. Communicate with AuthRepository")
-
-        viewModelScope.launch {
-            // TODO: - Delete loadings after testing
-            _state.update {
-                it.copy(isLoading = true)
-            }
-            delay(1000) // TODO:- replace with network call here.
-            _state.update {
-                it.copy(isLoading = false)
+    fun handleAction(action : LoginActions){
+        when(action){
+            is LoginActions.OnEmailChanged -> {
+                _state.update {
+                    it.copy(email = action.email)
+                }
             }
 
-            // TODO: - Delete this after testing
-            _state.update {
-                it.copy(error = "Login failed")
+            is LoginActions.OnPasswordChanged -> {
+                _state.update {
+                    it.copy(password = action.password)
+                }
             }
-            _events.send(LoginEvent.NavigateToHome())
+
+            is LoginActions.OnErrorDialogDismissed -> {
+                _state.update {
+                    it.copy(error = "")
+                }
+            }
+
+            is LoginActions.OnLoginTapped -> {
+                viewModelScope.launch {
+                    _state.update {
+                        it.copy(isLoading = true)
+                    }
+                    authRepo.login(
+                        email = _state.value.email,
+                        password = _state.value.password,
+                        onSuccess = {
+                            _state.update { it.copy(isLoading = false) }
+                            // Login successful navigate to home
+                            viewModelScope.launch {
+                                _events.send(LoginEvent.NavigateToHome())
+                            }
+                        },
+                        onFailure = { errorMsg ->
+                            // Login failed. Show error message
+                            _state.update { it.copy(isLoading = false, error = errorMsg) }
+                        }
+                    )
+                }
+            }
+
+            is LoginActions.OnSignUpTapped -> {
+                viewModelScope.launch {
+                    _events.send(LoginEvent.NavigateToSignUp())
+                }
+            }
         }
     }
-
-    fun onSignUpTapped() {
-        viewModelScope.launch {
-            _events.send(LoginEvent.NavigateToSignUp())
-        }
-    }
-}
-
-data class LoginState(
-    val email: String = "",
-    val password: String = "",
-    val isLoading: Boolean = false,
-    val error: String = "",
-)
-
-sealed interface LoginEvent {
-    class NavigateToHome() : LoginEvent
-    class NavigateToSignUp() : LoginEvent
 }

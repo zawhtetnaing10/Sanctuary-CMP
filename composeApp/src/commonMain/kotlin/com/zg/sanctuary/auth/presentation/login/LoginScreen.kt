@@ -73,21 +73,7 @@ fun LoginRoute(
 
     LoginScreen(
         state = loginState,
-        onSignUpClicked = {
-            viewModel.onSignUpTapped()
-        },
-        onLoginClicked = {
-            viewModel.onLoginTapped()
-        },
-        onEmailChanged = {
-            viewModel.onEmailChanged(it)
-        },
-        onPasswordChanged = {
-            viewModel.onPasswordChanged(it)
-        },
-        onErrorDialogDismissed = {
-            viewModel.onErrorDialogDismissed()
-        }
+        onAction = viewModel::handleAction
     )
 }
 
@@ -95,23 +81,20 @@ fun LoginRoute(
 @Composable
 fun LoginScreen(
     state: LoginState,
-    onSignUpClicked: () -> Unit,
-    onLoginClicked: () -> Unit,
-    onErrorDialogDismissed: () -> Unit,
-    onEmailChanged: (String) -> Unit,
-    onPasswordChanged: (String) -> Unit,
+    onAction: (LoginActions) -> Unit ,
 ) {
 
     val scrollSate = rememberScrollState()
 
     if (state.isLoading) {
-        // TODO: - Extract it to a separate composable
         LoadingDialog(onDismissRequest = {})
     }
 
     if (state.error.isNotEmpty()) {
         ErrorDialog(
-            onDismissRequest = onErrorDialogDismissed,
+            onDismissRequest = {
+                onAction(LoginActions.OnErrorDialogDismissed)
+            },
             message = state.error
         )
     }
@@ -132,7 +115,9 @@ fun LoginScreen(
             // User name or email
             SanctuaryTextField(
                 inputText = state.email,
-                onInputChanged = onEmailChanged,
+                onInputChanged = {
+                    onAction(LoginActions.OnEmailChanged(it))
+                },
                 hint = stringResource(Res.string.username_or_email_hint),
                 modifier = Modifier.padding(top = LOGO_BOTTOM_SPACING)
             )
@@ -140,7 +125,9 @@ fun LoginScreen(
             // Password
             SanctuaryPasswordTextField(
                 inputText = state.password,
-                onInputChanged = onPasswordChanged,
+                onInputChanged = {
+                    onAction(LoginActions.OnPasswordChanged(it))
+                },
                 hint = stringResource(Res.string.password),
                 modifier = Modifier.padding(top = MARGIN_LARGE)
             )
@@ -149,7 +136,7 @@ fun LoginScreen(
             SanctuaryPrimaryButton(
                 title = stringResource(Res.string.login),
                 onClick = {
-                    onLoginClicked()
+                    onAction(LoginActions.OnLoginTapped)
                 },
                 modifier = Modifier.padding(top = MARGIN_LARGE).fillMaxWidth()
             )
@@ -167,7 +154,7 @@ fun LoginScreen(
             SanctuaryAccentButton(
                 title = stringResource(Res.string.signup),
                 onClick = {
-                    onSignUpClicked()
+                    onAction(LoginActions.OnSignUpTapped)
                 },
                 modifier = Modifier.padding(top = MARGIN_LARGE).fillMaxWidth()
             )

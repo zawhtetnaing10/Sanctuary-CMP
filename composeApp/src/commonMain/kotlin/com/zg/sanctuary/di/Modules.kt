@@ -1,6 +1,9 @@
 package com.zg.sanctuary.di
 
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
+import com.zg.sanctuary.auth.data.network.api_services.AuthApiService
+import com.zg.sanctuary.auth.data.network.api_services.impls.AuthApiServiceImpl
+import com.zg.sanctuary.auth.data.repositories.AuthRepository
 import com.zg.sanctuary.auth.presentation.login.LoginViewModel
 import com.zg.sanctuary.core.persistence.DatabaseFactory
 import com.zg.sanctuary.core.persistence.SanctuaryDatabase
@@ -27,6 +30,12 @@ val sharedModule = module {
     single<InterestsApiService> { InterestApiServiceImpl() }
     single<InterestRepository> {
         InterestRepository(interestsApiService = get(), database = get())
+    }
+
+    // Auth
+    single<AuthApiService> { AuthApiServiceImpl() }
+    single<AuthRepository> {
+        AuthRepository(authApiService = get(), database = get())
     }
 
     // View Models
