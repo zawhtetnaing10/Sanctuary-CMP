@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.zg.sanctuary.core.LOGO_BOTTOM_SPACING
 import com.zg.sanctuary.core.LOGO_HEIGHT
 import com.zg.sanctuary.core.LOGO_WIDTH
@@ -26,17 +28,12 @@ import com.zg.sanctuary.core.MARGIN_XLARGE
 import com.zg.sanctuary.core.MARGIN_XXLARGE
 import com.zg.sanctuary.core.NORMAL_LABEL_COLOR
 import com.zg.sanctuary.core.TEXT_REGULAR
-import com.zg.sanctuary.core.network.onError
-import com.zg.sanctuary.core.network.onSuccess
 import com.zg.sanctuary.core.presentation.components.SanctuaryAccentButton
 import com.zg.sanctuary.core.presentation.components.SanctuaryPasswordTextField
 import com.zg.sanctuary.core.presentation.components.SanctuaryPrimaryButton
 import com.zg.sanctuary.core.presentation.components.SanctuaryTextField
-import com.zg.sanctuary.interests.data.network.api_services.impls.InterestApiServiceImpl
-import com.zg.sanctuary.interests.data.repositories.InterestRepository
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import org.koin.compose.koinInject
 import sanctuary.composeapp.generated.resources.Res
 import sanctuary.composeapp.generated.resources.login
 import sanctuary.composeapp.generated.resources.no_account_label
@@ -45,50 +42,78 @@ import sanctuary.composeapp.generated.resources.sanctuary_logo
 import sanctuary.composeapp.generated.resources.signup
 import sanctuary.composeapp.generated.resources.terms_of_service_login
 import sanctuary.composeapp.generated.resources.username_or_email_hint
+import androidx.compose.runtime.getValue
+import com.zg.sanctuary.core.presentation.components.dialogs.ErrorDialog
+import com.zg.sanctuary.core.presentation.components.dialogs.LoadingDialog
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun LoginRoute(
-    onSignUpClicked: () -> Unit,
-    onLoginClicked: () -> Unit
+    viewModel: LoginViewModel,
+    onNavigateToSignUpTriggered: () -> Unit,
+    onNavToHomeTriggered: () -> Unit
 ) {
+    val loginState by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        // Observe events here.
+        viewModel.events.collectLatest {
+            when (it) {
+                is LoginEvent.NavigateToHome -> {
+                    println("Navigate to home right now. From View Model")
+                    onNavToHomeTriggered()
+                }
+
+                is LoginEvent.NavigateToSignUp -> {
+                    onNavigateToSignUpTriggered()
+                }
+            }
+        }
+    }
+
     LoginScreen(
+        state = loginState,
         onSignUpClicked = {
-            // TODO: - Communicate with view model
-            onSignUpClicked()
+            viewModel.onSignUpTapped()
         },
         onLoginClicked = {
-            // TODO: - Communicate with view model
-            onLoginClicked()
+            viewModel.onLoginTapped()
+        },
+        onEmailChanged = {
+            viewModel.onEmailChanged(it)
+        },
+        onPasswordChanged = {
+            viewModel.onPasswordChanged(it)
+        },
+        onErrorDialogDismissed = {
+            viewModel.onErrorDialogDismissed()
         }
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
+    state: LoginState,
     onSignUpClicked: () -> Unit,
-    onLoginClicked: () -> Unit
+    onLoginClicked: () -> Unit,
+    onErrorDialogDismissed: () -> Unit,
+    onEmailChanged: (String) -> Unit,
+    onPasswordChanged: (String) -> Unit,
 ) {
 
     val scrollSate = rememberScrollState()
 
-    val interestRepo : InterestRepository = koinInject()
+    if (state.isLoading) {
+        // TODO: - Extract it to a separate composable
+        LoadingDialog(onDismissRequest = {})
+    }
 
-    // TODO: - Delete this after testing
-    LaunchedEffect(Unit) {
-//        interestRepo.getAllInterestsFromNetwork(
-//            onSuccess = { interests ->
-//                interests.forEach {
-//                    println("Interest =====> ${it.name}")
-//                }
-//            },
-//            onFailure = { errorMessage ->
-//                println("Get interests failed ====> $errorMessage")
-//            }
-//        )
-
-        interestRepo.getAllInterestsFromDB().forEach {
-            println("Interest from db =====> ${it.name}")
-        }
+    if (state.error.isNotEmpty()) {
+        ErrorDialog(
+            onDismissRequest = onErrorDialogDismissed,
+            message = state.error
+        )
     }
 
     Surface(modifier = Modifier.fillMaxSize(), color = Color.White) {
@@ -106,16 +131,16 @@ fun LoginScreen(
 
             // User name or email
             SanctuaryTextField(
-                inputText = "",
-                onInputChanged = {},
+                inputText = state.email,
+                onInputChanged = onEmailChanged,
                 hint = stringResource(Res.string.username_or_email_hint),
                 modifier = Modifier.padding(top = LOGO_BOTTOM_SPACING)
             )
 
             // Password
             SanctuaryPasswordTextField(
-                inputText = "",
-                onInputChanged = {},
+                inputText = state.password,
+                onInputChanged = onPasswordChanged,
                 hint = stringResource(Res.string.password),
                 modifier = Modifier.padding(top = MARGIN_LARGE)
             )

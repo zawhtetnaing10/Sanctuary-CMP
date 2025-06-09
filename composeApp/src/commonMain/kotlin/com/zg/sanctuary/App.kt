@@ -10,9 +10,11 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.zg.sanctuary.auth.presentation.create_account.CreateAccountRoute
 import com.zg.sanctuary.auth.presentation.login.LoginRoute
+import com.zg.sanctuary.auth.presentation.login.LoginViewModel
 import com.zg.sanctuary.auth.presentation.personal_information.PersonalInformationScreen
 import com.zg.sanctuary.core.BeVietnamProTypography
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 @Preview
@@ -32,9 +34,13 @@ fun App() {
                     popEnterTransition = { slideInHorizontally(initialOffsetX = { -it / 4 }) },
                     popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) }
                 ) {
+                    val viewModel = koinViewModel<LoginViewModel>()
                     LoginRoute(
-                        onLoginClicked = {},
-                        onSignUpClicked = {
+                        viewModel = viewModel,
+                        onNavToHomeTriggered = {
+
+                        },
+                        onNavigateToSignUpTriggered = {
                             navController.navigate(AppRoute.CreateAccount)
                         }
                     )
