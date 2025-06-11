@@ -19,6 +19,7 @@ object HttpClientProvider {
                     prettyPrint = true
                     ignoreUnknownKeys = true
                     useAlternativeNames = false
+                    explicitNulls = false
                 })
             }
 

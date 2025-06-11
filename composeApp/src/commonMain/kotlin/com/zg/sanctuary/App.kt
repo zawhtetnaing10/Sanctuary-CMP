@@ -4,7 +4,6 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -13,7 +12,8 @@ import com.zg.sanctuary.auth.presentation.create_account.CreateAccountRoute
 import com.zg.sanctuary.auth.presentation.create_account.CreateAccountViewModel
 import com.zg.sanctuary.auth.presentation.login.LoginRoute
 import com.zg.sanctuary.auth.presentation.login.LoginViewModel
-import com.zg.sanctuary.auth.presentation.personal_information.PersonalInformationScreen
+import com.zg.sanctuary.auth.presentation.personal_information.PersonalInformationRoute
+import com.zg.sanctuary.auth.presentation.personal_information.PersonalInformationViewModel
 import com.zg.sanctuary.core.BeVietnamProTypography
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
@@ -30,7 +30,7 @@ fun App() {
             navController = navController,
             startDestination = AppRoute.AuthGraph
         ) {
-            navigation<AppRoute.AuthGraph>(startDestination = AppRoute.Login) {
+            navigation<AppRoute.AuthGraph>(startDestination = AppRoute.Login) { // TODO - Change back to AppRoute.Login after testing
                 composable<AppRoute.Login>(
                     enterTransition = { slideInHorizontally(initialOffsetX = { it / 2 }) },
                     popEnterTransition = { slideInHorizontally(initialOffsetX = { -it / 4 }) },
@@ -68,9 +68,11 @@ fun App() {
                     popEnterTransition = { slideInHorizontally(initialOffsetX = { -it / 4 }) },
                     popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) }
                 ) {
-                    PersonalInformationScreen(
-                        onClickNext = {},
-                        onTapBack = {
+                    val personalInfoVM = koinViewModel<PersonalInformationViewModel>()
+                    PersonalInformationRoute(
+                        viewModel = personalInfoVM,
+                        onNavigateToHomeTriggered = {},
+                        onBackTriggered = {
                             navController.navigateUp()
                         }
                     )

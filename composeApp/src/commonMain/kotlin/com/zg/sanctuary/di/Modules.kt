@@ -1,11 +1,13 @@
 package com.zg.sanctuary.di
 
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import com.zg.sanctuary.auth.data.network.api_services.AuthApiService
 import com.zg.sanctuary.auth.data.network.api_services.impls.AuthApiServiceImpl
 import com.zg.sanctuary.auth.data.repositories.AuthRepository
 import com.zg.sanctuary.auth.presentation.create_account.CreateAccountViewModel
 import com.zg.sanctuary.auth.presentation.login.LoginViewModel
+import com.zg.sanctuary.auth.presentation.personal_information.PersonalInformationViewModel
 import com.zg.sanctuary.core.persistence.DatabaseFactory
 import com.zg.sanctuary.core.persistence.SanctuaryDatabase
 import com.zg.sanctuary.interests.data.network.api_services.InterestsApiService
@@ -42,4 +44,5 @@ val sharedModule = module {
     // View Models
     viewModelOf(::LoginViewModel)
     viewModelOf(::CreateAccountViewModel)
+    viewModelOf(::PersonalInformationViewModel)
 }

@@ -22,4 +22,5 @@
     <string name="camera_or_gallery">You can upload your profile picture using either your camera or your gallery. Which would you prefer?</string>
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
+    <string name="ok">Ok</string>
 </resources>

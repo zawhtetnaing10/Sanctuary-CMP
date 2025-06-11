@@ -36,7 +36,10 @@ fun SanctuaryTextField(
             focusedBorderColor = Color.Transparent,
             unfocusedBorderColor = Color.Transparent,
             disabledContainerColor = TEXT_FIELD_BACKGROUND_COLOR,
-            disabledBorderColor = Color.Transparent
+            disabledBorderColor = Color.Transparent,
+            unfocusedTextColor = Color.Black,
+            focusedTextColor = Color.Black,
+            disabledTextColor = Color.Black
         ),
         shape = RoundedCornerShape(MARGIN_CARD_MEDIUM_2),
         modifier = modifier.fillMaxWidth()

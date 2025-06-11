@@ -23,16 +23,16 @@ import com.zg.sanctuary.core.MARGIN_MEDIUM_2
 import com.zg.sanctuary.core.MARGIN_XLARGE
 import com.zg.sanctuary.core.PRIMARY_COLOR
 import com.zg.sanctuary.core.TEXT_REGULAR
+import com.zg.sanctuary.interests.domain.Interest
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun InterestsSelection(
-    // TODO: - Send the selected interest back
+    interests : List<Interest>,
+    chosenInterests : Set<Interest>,
+    onInterestPicked : (Interest) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    // TODO: - Replace this with real data after testing
-    val interests = listOf("Coding", "Design", "Writing", "Photography", "Travel", "Reading", "Cooking", "Sports", "Movies", "Gaming", "Fashion")
-    var selectedInterests = remember { mutableStateListOf<String>() }
 
     FlowRow(
         horizontalArrangement = Arrangement.spacedBy(MARGIN_MEDIUM),
@@ -40,22 +40,22 @@ fun InterestsSelection(
         modifier = modifier
     ) {
         interests.forEach { interest ->
+
+            val isSelected = chosenInterests.contains(interest)
+
             FilterChip(
-                selected = selectedInterests.contains(interest),
+                selected = isSelected,
                 label = {
-                    Text(interest, fontWeight = FontWeight.Medium, fontSize = TEXT_REGULAR)
+                    Text(interest.name, fontWeight = FontWeight.Medium, fontSize = TEXT_REGULAR)
                 },
                 shape = RoundedCornerShape(MARGIN_MEDIUM_2),
                 onClick = {
                     // Toggle selection
-                    if (selectedInterests.contains(interest))
-                        selectedInterests.remove(interest)
-                    else
-                        selectedInterests.add(interest)
+                    onInterestPicked(interest)
                 },
                 border = null,
                 leadingIcon = {
-                    if (selectedInterests.contains(interest))
+                    if (isSelected)
                         Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(MARGIN_MEDIUM_2))
                     else
                         null

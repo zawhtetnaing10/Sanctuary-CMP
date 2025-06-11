@@ -41,7 +41,7 @@ suspend inline fun <reified T> responseToResult(httpResponse: HttpResponse): San
                     )
                 )
             } catch (e: Exception) {
-                SanctuaryResult.Failure(
+                return SanctuaryResult.Failure(
                     SanctuaryError(
                         errorType = SanctuaryErrorEnums.Remote.UNKNOWN,
                         error = "An unexpected error occurred during success body processing: ${e.message}. Raw: ${httpResponse.bodyAsText()}"

@@ -27,7 +27,9 @@ data class User(
     @SerialName("dob")
     val dob: String?,
     @SerialName("access_token")
-    val accessToken: String,
+    var accessToken: String?,
     @SerialName("interests")
     val interests: List<Interest>
-)
+) {
+    fun getBearerToken(): String = "Bearer $accessToken"
+}

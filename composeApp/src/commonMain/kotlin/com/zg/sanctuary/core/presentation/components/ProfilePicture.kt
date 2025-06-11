@@ -7,9 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -52,7 +49,7 @@ import sanctuary.composeapp.generated.resources.placeholder_profile_picture
 
 @Composable
 fun ProfilePicture(
-    // TODO: - Send the picked profile picture back to parent.
+    onImagePicked: (ByteArray) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -65,9 +62,10 @@ fun ProfilePicture(
         selectionMode = SelectionMode.Single,
         scope = scope,
         onResult = { pickedImages ->
-            val pickedImage = pickedImages.firstOrNull()
+            val pickedImage: ByteArray? = pickedImages.firstOrNull()
 
             pickedImage?.let {
+                onImagePicked(pickedImage)
                 pickedImageBitmap = it.toImageBitmap()
             }
         }
@@ -82,6 +80,9 @@ fun ProfilePicture(
     val cameraManager = rememberCameraManager(
         onResult = { capturedImage ->
             capturedImage?.let {
+                it.toByteArray()?.let { byteArray ->
+                    onImagePicked(byteArray)
+                }
                 pickedImageBitmap = it.toImageBitmap()
             }
         }
@@ -166,27 +167,6 @@ fun ProfilePicture(
                 modifier = Modifier.size(MARGIN_MEDIUM_2)
                     .align(Alignment.Center)
             )
-        }
-
-        // Delete picture button
-        if (pickedImageBitmap != null) {
-            Box(
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .offset(y = MARGIN_SMALL, x = -MARGIN_SMALL)
-                    .size(MARGIN_XLARGE)
-                    .background(TEXT_FIELD_BACKGROUND_COLOR, shape = CircleShape)
-                    .clickable {
-                        pickedImageBitmap = null
-                    }
-            ) {
-                Icon(
-                    Icons.Default.Close,
-                    contentDescription = null,
-                    modifier = Modifier.size(MARGIN_MEDIUM_2)
-                        .align(Alignment.Center)
-                )
-            }
         }
     }
 }
