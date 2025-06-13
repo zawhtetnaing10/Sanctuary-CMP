@@ -38,8 +38,18 @@ class CreateAccountViewModel(
             }
 
             is CreateAccountActions.OnTapCreateAccount -> {
-                _state.update { it.copy(isLoading = true) }
 
+                if (_state.value.email.isEmpty()) {
+                    _state.update { it.copy(error = "Email cannot be empty") }
+                    return
+                }
+
+                if (_state.value.password.isEmpty()) {
+                    _state.update { it.copy(error = "Password cannot be empty") }
+                    return
+                }
+
+                _state.update { it.copy(isLoading = true) }
                 viewModelScope.launch {
                     authRepo.createAccount(
                         email = _state.value.email,

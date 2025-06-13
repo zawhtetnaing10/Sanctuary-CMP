@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.updateAndGet
 import kotlinx.coroutines.launch
 
 class PersonalInformationViewModel(
@@ -74,7 +75,33 @@ class PersonalInformationViewModel(
             }
 
             is PersonalInformationActions.OnCompleteSignUpTapped -> {
+                if(_state.value.pickedImage.isEmpty()){
+                    _state.update { it.copy(error = "Please take a picture from camera or pick an image from gallery for your profile pic.") }
+                    return
+                }
+
+                if(_state.value.fullName.isEmpty()){
+                    _state.update { it.copy(error = "Full name cannot be empty.") }
+                    return
+                }
+
+                if(_state.value.userName.isEmpty()){
+                    _state.update { it.copy(error = "Username cannot be empty.") }
+                    return
+                }
+
+                if(_state.value.dob.isEmpty()){
+                    _state.update { it.copy(error = "Date of birth cannot be empty.") }
+                    return
+                }
+
+                if(_state.value.chosenInterests.isEmpty()){
+                    _state.update { it.copy(error = "Please choose your interests.") }
+                    return
+                }
+
                 _state.update { it.copy(isLoading = true) }
+
                 viewModelScope.launch {
                     authRepo.updateUser(
                         profileImage = _state.value.pickedImage,

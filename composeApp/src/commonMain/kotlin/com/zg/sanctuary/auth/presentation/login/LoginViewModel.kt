@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val authRepo : AuthRepository
+    private val authRepo: AuthRepository
 ) : ViewModel() {
 
     // State
@@ -25,8 +25,8 @@ class LoginViewModel(
     private val _events = Channel<LoginEvent>()
     val events = _events.receiveAsFlow()
 
-    fun handleAction(action : LoginActions){
-        when(action){
+    fun handleAction(action: LoginActions) {
+        when (action) {
             is LoginActions.OnEmailChanged -> {
                 _state.update {
                     it.copy(email = action.email)
@@ -46,6 +46,17 @@ class LoginViewModel(
             }
 
             is LoginActions.OnLoginTapped -> {
+
+                if (_state.value.email.isEmpty()) {
+                    _state.update { it.copy(error = "Email cannot be empty") }
+                    return
+                }
+
+                if (_state.value.password.isEmpty()) {
+                    _state.update { it.copy(error = "Password cannot be empty") }
+                    return
+                }
+
                 viewModelScope.launch {
                     _state.update {
                         it.copy(isLoading = true)
