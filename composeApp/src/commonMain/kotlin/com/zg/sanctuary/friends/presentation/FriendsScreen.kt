@@ -1,4 +1,4 @@
-package com.zg.sanctuary.posts.presentation
+package com.zg.sanctuary.friends.presentation
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,13 +8,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun PostListRoute(){
-    PostListScreen()
+fun FriendsRoute(){
+    FriendsScreen()
 }
 
 @Composable
-fun PostListScreen(){
+fun FriendsScreen(){
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
-        Text("Post List Screen")
+        Text("Friends Screen")
     }
 }

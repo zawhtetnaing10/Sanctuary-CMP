@@ -15,6 +15,7 @@ import com.zg.sanctuary.auth.presentation.login.LoginViewModel
 import com.zg.sanctuary.auth.presentation.personal_information.PersonalInformationRoute
 import com.zg.sanctuary.auth.presentation.personal_information.PersonalInformationViewModel
 import com.zg.sanctuary.core.BeVietnamProTypography
+import com.zg.sanctuary.home.presentation.HomeRoute
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -28,13 +29,14 @@ fun App() {
 
         NavHost(
             navController = navController,
-            startDestination = AppRoute.AuthGraph
+            startDestination = AppRoute.Home
         ) {
+            // Auth
             navigation<AppRoute.AuthGraph>(startDestination = AppRoute.Login) { // TODO - Change back to AppRoute.Login after testing
                 composable<AppRoute.Login>(
-                    enterTransition = { slideInHorizontally(initialOffsetX = { it / 2 }) },
-                    popEnterTransition = { slideInHorizontally(initialOffsetX = { -it / 4 }) },
-                    popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) }
+                    enterTransition = { enterTransition },
+                    popEnterTransition = { popEnterTransition },
+                    popExitTransition = { popExitTransition }
                 ) {
                     val viewModel = koinViewModel<LoginViewModel>()
                     LoginRoute(
@@ -48,9 +50,9 @@ fun App() {
                     )
                 }
                 composable<AppRoute.CreateAccount>(
-                    enterTransition = { slideInHorizontally(initialOffsetX = { it / 2 }) },
-                    popEnterTransition = { slideInHorizontally(initialOffsetX = { -it / 4 }) },
-                    popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) }
+                    enterTransition = { enterTransition },
+                    popEnterTransition = { popEnterTransition },
+                    popExitTransition = { popExitTransition }
                 ) {
                     val createAccountViewModel = koinViewModel<CreateAccountViewModel>()
                     CreateAccountRoute(
@@ -64,9 +66,9 @@ fun App() {
                     )
                 }
                 composable<AppRoute.PersonalInformation>(
-                    enterTransition = { slideInHorizontally(initialOffsetX = { it / 2 }) },
-                    popEnterTransition = { slideInHorizontally(initialOffsetX = { -it / 4 }) },
-                    popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) }
+                    enterTransition = { enterTransition },
+                    popEnterTransition = { popEnterTransition },
+                    popExitTransition = { popExitTransition }
                 ) {
                     val personalInfoVM = koinViewModel<PersonalInformationViewModel>()
                     PersonalInformationRoute(
@@ -79,11 +81,20 @@ fun App() {
                 }
             }
 
+            // Posts
+            composable<AppRoute.Home>(
+                enterTransition = { enterTransition },
+                popEnterTransition = { popEnterTransition },
+                popExitTransition = { popExitTransition }
+            ) {
+                HomeRoute()
+            }
         }
     }
 }
 
 // Transitions for navigation
-//val slideInTransitionOffset: (Int) -> Int = { it / 2 }
-//val sanctuaryEnterTransition: EnterTransition = slideInHorizontally(initialOffsetX = slideInTransitionOffset)
+val enterTransition = slideInHorizontally(initialOffsetX = { it / 2 })
+val popEnterTransition = slideInHorizontally(initialOffsetX = { -it / 4 })
+val popExitTransition = slideOutHorizontally(targetOffsetX = { it })
 
