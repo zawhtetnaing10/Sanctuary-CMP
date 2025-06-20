@@ -15,6 +15,8 @@ val MARGIN_XXLARGE = 48.dp
 val MARGIN_56 = 56.dp
 
 // Fonts
+val TEXT_SMALL_2X = 10.sp
+val TEXT_SMALL = 12.sp
 val TEXT_REGULAR = 14.sp
 val TEXT_REGULAR_2X = 16.sp
 val TEXT_REGULAR_2XX = 18.sp
@@ -28,3 +30,4 @@ val LOGO_HEIGHT = 185.dp
 val LOGO_BOTTOM_SPACING = 37.dp
 
 val PROFILE_PICTURE_SIZE = 128.dp
+val POST_IMAGE_HEIGHT = 260.dp

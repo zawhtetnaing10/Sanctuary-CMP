@@ -14,6 +14,7 @@ import com.zg.sanctuary.core.HINT_COLOR
 import com.zg.sanctuary.core.MARGIN_CARD_MEDIUM_2
 import com.zg.sanctuary.core.TEXT_FIELD_BACKGROUND_COLOR
 import com.zg.sanctuary.core.TEXT_REGULAR_2X
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun SanctuaryTextField(
@@ -44,5 +45,16 @@ fun SanctuaryTextField(
         shape = RoundedCornerShape(MARGIN_CARD_MEDIUM_2),
         modifier = modifier.fillMaxWidth()
             .height(56.dp)
+    )
+}
+
+@Preview()
+@Composable
+fun SanctuaryTextFieldPreview(){
+    SanctuaryTextField(
+        inputText = "",
+        onInputChanged = {},
+        hint = "",
+        isEnabled = false,
     )
 }
