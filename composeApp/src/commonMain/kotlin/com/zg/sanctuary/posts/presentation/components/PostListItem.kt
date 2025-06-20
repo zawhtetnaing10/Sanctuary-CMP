@@ -1,6 +1,7 @@
 package com.zg.sanctuary.posts.presentation.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -49,9 +50,10 @@ fun PostListItem(
     onLikeClicked: () -> Unit,
     onCommentClicked: () -> Unit,
     onShareClicked: () -> Unit,
+    onPostClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column {
+    Column(modifier = modifier) {
 
         // Profile Image and Name
         Row(
@@ -89,6 +91,7 @@ fun PostListItem(
         Text(
             "I'm so excited to share my latest travel adventure with you all! I've been exploring the hidden gems of the Italian countryside, and the scenery is absolutely breathtaking. From rolling hills to charming villages, every corner is a postcard-worthy moment. Stay tuned for more updates and photos!",
             modifier = Modifier.padding(horizontal = MARGIN_MEDIUM_2)
+                .clickable(indication = null, interactionSource = null, onClick = { onPostClicked() })
         )
 
         Spacer(modifier = Modifier.height(MARGIN_CARD_MEDIUM_2))
@@ -144,19 +147,9 @@ fun PostListItem(
 
 @Composable
 fun PostActionButton(iconPainter: Painter, count: Int, onButtonClicked: () -> Unit, modifier: Modifier = Modifier) {
-    Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+    Row(modifier = modifier.fillMaxWidth().clickable(indication = null, interactionSource = null) { onButtonClicked() }, horizontalArrangement = Arrangement.Center) {
         Icon(iconPainter, contentDescription = null, modifier = Modifier.size(MARGIN_LARGE))
         Spacer(modifier = Modifier.width(MARGIN_MEDIUM))
         Text("$count", color = Color.Black)
     }
-}
-
-@Preview
-@Composable
-fun PostListItemPreview() {
-    PostListItem(
-        onLikeClicked = {},
-        onCommentClicked = {},
-        onShareClicked = {}
-    )
 }

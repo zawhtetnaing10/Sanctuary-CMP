@@ -1,7 +1,5 @@
 package com.zg.sanctuary.home.presentation
 
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.BottomAppBar
@@ -26,9 +24,12 @@ import androidx.navigation.compose.rememberNavController
 import com.zg.sanctuary.AppRoute
 import com.zg.sanctuary.core.MARGIN_LARGE
 import com.zg.sanctuary.friends.presentation.FriendsRoute
-import com.zg.sanctuary.posts.presentation.PostListRoute
+import com.zg.sanctuary.posts.presentation.post_list.PostListEvent
+import com.zg.sanctuary.posts.presentation.post_list.PostListRoute
+import com.zg.sanctuary.posts.presentation.post_list.PostListViewModel
 import com.zg.sanctuary.profile.presentation.ProfileRoute
 import org.jetbrains.compose.resources.painterResource
+import org.koin.compose.viewmodel.koinViewModel
 import sanctuary.composeapp.generated.resources.Res
 import sanctuary.composeapp.generated.resources.friends_selected
 import sanctuary.composeapp.generated.resources.friends_unselected
@@ -36,8 +37,7 @@ import sanctuary.composeapp.generated.resources.home_selected
 import sanctuary.composeapp.generated.resources.home_unselected
 
 @Composable
-fun HomeRoute(
-) {
+fun HomeRoute() {
     HomeScreen()
 }
 
@@ -62,7 +62,14 @@ fun HomeScreen() {
                 startDestination = AppRoute.PostList
             ) {
                 composable<AppRoute.PostList> {
-                    PostListRoute()
+                    val postListViewModel = koinViewModel<PostListViewModel>()
+                    PostListRoute(
+                        postListViewModel, onNavigateToCreatePost = {
+                            println("Navigate to create post screen")
+                        }, onNavigateToPostDetails = {
+                            println("Navigate to post details")
+                        },
+                    )
                 }
             }
 
