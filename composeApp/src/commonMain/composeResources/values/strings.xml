@@ -25,4 +25,6 @@
     <string name="gallery">Gallery</string>
     <string name="ok">Ok</string>
     <string name="create_post_label">What's on your mind?</string>
+    <string name="new_post">New Post</string>
+    <string name="post">Post</string>
 </resources>

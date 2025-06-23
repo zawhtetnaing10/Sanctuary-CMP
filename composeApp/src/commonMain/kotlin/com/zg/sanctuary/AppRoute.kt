@@ -30,6 +30,9 @@ sealed interface AppRoute {
     @Serializable
     data class PostDetails(val postId : Int) : AppRoute
 
+    @Serializable
+    data object CreatePost : AppRoute
+
     // Friends
     @Serializable
     data object FriendsGraph : AppRoute

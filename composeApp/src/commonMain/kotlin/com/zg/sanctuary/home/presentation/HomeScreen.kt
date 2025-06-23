@@ -37,15 +37,17 @@ import sanctuary.composeapp.generated.resources.home_selected
 import sanctuary.composeapp.generated.resources.home_unselected
 
 @Composable
-fun HomeRoute(onNavigateToPostDetails: (Int) -> Unit) {
+fun HomeRoute(onNavigateToPostDetails: (Int) -> Unit, onNavigateToCreatePost: () -> Unit) {
     HomeScreen(
-        onNavigateToPostDetails = onNavigateToPostDetails
+        onNavigateToPostDetails = onNavigateToPostDetails,
+        onNavigateToCreatePost = onNavigateToCreatePost
     )
 }
 
 @Composable
 fun HomeScreen(
     onNavigateToPostDetails: (Int) -> Unit,
+    onNavigateToCreatePost : () -> Unit
 ) {
 
     val homeNavController = rememberNavController()
@@ -70,7 +72,7 @@ fun HomeScreen(
                     PostListRoute(
                         postListViewModel,
                         onNavigateToCreatePost = {
-                            println("Navigate to create post")
+                            onNavigateToCreatePost()
                         },
                         onNavigateToPostDetails = { postId ->
                             onNavigateToPostDetails(postId)

@@ -17,6 +17,7 @@ import com.zg.sanctuary.auth.presentation.personal_information.PersonalInformati
 import com.zg.sanctuary.auth.presentation.personal_information.PersonalInformationViewModel
 import com.zg.sanctuary.core.BeVietnamProTypography
 import com.zg.sanctuary.home.presentation.HomeRoute
+import com.zg.sanctuary.posts.presentation.create_post.CreatePostRoute
 import com.zg.sanctuary.posts.presentation.post_details.PostDetailsRoute
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
@@ -91,6 +92,8 @@ fun App() {
             ) {
                 HomeRoute(onNavigateToPostDetails = { postId ->
                     navController.navigate(AppRoute.PostDetails(postId))
+                }, onNavigateToCreatePost = {
+                    navController.navigate(AppRoute.CreatePost)
                 })
             }
 
@@ -107,6 +110,15 @@ fun App() {
                 // TODO: - Set up view model here
 
                 PostDetailsRoute()
+            }
+
+            // Create Post
+            composable<AppRoute.CreatePost>(
+                enterTransition = { enterTransition },
+                popEnterTransition = { popEnterTransition },
+                popExitTransition = { popExitTransition }
+            ) {
+                CreatePostRoute()
             }
         }
     }
