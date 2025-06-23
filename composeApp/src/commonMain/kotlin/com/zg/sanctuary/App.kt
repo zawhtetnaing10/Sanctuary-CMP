@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.zg.sanctuary.auth.presentation.create_account.CreateAccountRoute
 import com.zg.sanctuary.auth.presentation.create_account.CreateAccountViewModel
 import com.zg.sanctuary.auth.presentation.login.LoginRoute
@@ -16,6 +17,7 @@ import com.zg.sanctuary.auth.presentation.personal_information.PersonalInformati
 import com.zg.sanctuary.auth.presentation.personal_information.PersonalInformationViewModel
 import com.zg.sanctuary.core.BeVietnamProTypography
 import com.zg.sanctuary.home.presentation.HomeRoute
+import com.zg.sanctuary.posts.presentation.post_details.PostDetailsRoute
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -29,7 +31,7 @@ fun App() {
 
         NavHost(
             navController = navController,
-            startDestination = AppRoute.Home
+            startDestination = AppRoute.Home //TODO:- Change back after testing
         ) {
             // Auth
             navigation<AppRoute.AuthGraph>(startDestination = AppRoute.Login) { // TODO - Change back to AppRoute.Login after testing
@@ -81,13 +83,30 @@ fun App() {
                 }
             }
 
-            // Posts
+            // Home
             composable<AppRoute.Home>(
                 enterTransition = { enterTransition },
                 popEnterTransition = { popEnterTransition },
                 popExitTransition = { popExitTransition }
             ) {
-                HomeRoute()
+                HomeRoute(onNavigateToPostDetails = { postId ->
+                    navController.navigate(AppRoute.PostDetails(postId))
+                })
+            }
+
+            // Post Details
+            composable<AppRoute.PostDetails>(
+                enterTransition = { enterTransition },
+                popEnterTransition = { popEnterTransition },
+                popExitTransition = { popExitTransition }
+            ) { backStackEntry ->
+
+                val args = backStackEntry.toRoute<AppRoute.PostDetails>()
+                val postId = args.postId
+
+                // TODO: - Set up view model here
+
+                PostDetailsRoute()
             }
         }
     }

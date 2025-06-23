@@ -7,6 +7,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -15,9 +16,7 @@ import com.zg.sanctuary.core.MARGIN_SMALL
 import com.zg.sanctuary.posts.presentation.components.CreatePostView
 import com.zg.sanctuary.posts.presentation.components.PostListAppBar
 import com.zg.sanctuary.posts.presentation.components.PostListItem
-import androidx.compose.runtime.getValue
 import kotlinx.coroutines.flow.collectLatest
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun PostListRoute(
