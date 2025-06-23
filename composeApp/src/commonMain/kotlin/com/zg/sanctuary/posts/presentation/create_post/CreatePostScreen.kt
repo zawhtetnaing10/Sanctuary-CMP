@@ -60,6 +60,7 @@ fun CreatePostScreen() {
         topBar = {
             CreatePostAppbar(
                 onTapBack = {},
+                onTapPost = {}
             )
         },
         containerColor = Color.White

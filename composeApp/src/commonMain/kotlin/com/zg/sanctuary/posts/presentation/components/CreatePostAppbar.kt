@@ -1,6 +1,7 @@
 package com.zg.sanctuary.posts.presentation.components
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -16,7 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import com.zg.sanctuary.core.MARGIN_MEDIUM
+import com.zg.sanctuary.core.MARGIN_MEDIUM_2
 import com.zg.sanctuary.core.MARGIN_XLARGE
+import com.zg.sanctuary.core.POST_BUTTON_COLOR
 import com.zg.sanctuary.core.TEXT_REGULAR_3X
 import org.jetbrains.compose.resources.stringResource
 import sanctuary.composeapp.generated.resources.Res
@@ -26,6 +29,7 @@ import sanctuary.composeapp.generated.resources.new_post
 @Composable
 fun CreatePostAppbar(
     onTapBack: () -> Unit,
+    onTapPost: () -> Unit,
 ) {
     CenterAlignedTopAppBar(
         title = {
@@ -46,5 +50,15 @@ fun CreatePostAppbar(
                 contentDescription = null,
                 modifier = Modifier.padding(start = MARGIN_MEDIUM).size(MARGIN_XLARGE).clickable { onTapBack() })
         },
+        actions = {
+            Box(modifier = Modifier.padding(horizontal = MARGIN_MEDIUM_2)) {
+                Text(
+                    "Post",
+                    fontWeight = FontWeight.Bold,
+                    color = POST_BUTTON_COLOR,
+                    modifier = Modifier
+                        .clickable { onTapPost })
+            }
+        }
     )
 }
