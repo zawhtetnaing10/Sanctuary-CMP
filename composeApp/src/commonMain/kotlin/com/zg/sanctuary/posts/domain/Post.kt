@@ -1,16 +1,27 @@
 package com.zg.sanctuary.posts.domain
 
-import com.zg.sanctuary.comments.domain.Comment
 import com.zg.sanctuary.auth.domain.User
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Post(
+    @SerialName("id")
     val id : Int,
+    @SerialName("content")
     val content : String,
-    val user : User,
+    @SerialName("media_url")
+    val mediaUrl : String,
+    @SerialName("liked_by_user")
+    val likedByUser : Boolean,
+    @SerialName("like_count")
+    val likeCount : Int,
+    @SerialName("comment_count")
+    val commentCount : Int,
+    @SerialName("created_at")
     val createdAt : String,
+    @SerialName("updated_at")
     val updatedAt : String,
-    val deletedAt : String?,
-    val comments : List<Comment>?,
-    val numComments : Int,
-    val numLikes : Int,
+    @SerialName("user")
+    val user: User
 )

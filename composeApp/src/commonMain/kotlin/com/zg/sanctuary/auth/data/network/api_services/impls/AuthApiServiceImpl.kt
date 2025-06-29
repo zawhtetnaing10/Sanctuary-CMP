@@ -66,9 +66,9 @@ class AuthApiServiceImpl : AuthApiService {
         // Get Image format
         val contentType: ContentType = ImageFormatDetector.detectImageContentType(profileImage)
             ?: return SanctuaryResult.Failure(SanctuaryError(error = "Unknown image format"))
-
+        // Craft File Name
         val imageFormatExtension = ImageFormatDetector.getDefaultExtension(contentType)
-        val fileName = "profile_image_${Clock.System.now().toEpochMilliseconds()}.${imageFormatExtension}"
+        val fileName = "image_${Clock.System.now().toEpochMilliseconds()}.${imageFormatExtension}"
 
         val chosenInterestIds = chosenInterests.map { it.id }
 

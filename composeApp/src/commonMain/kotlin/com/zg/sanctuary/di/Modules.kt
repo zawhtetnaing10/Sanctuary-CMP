@@ -13,6 +13,9 @@ import com.zg.sanctuary.core.persistence.SanctuaryDatabase
 import com.zg.sanctuary.interests.data.network.api_services.InterestsApiService
 import com.zg.sanctuary.interests.data.network.api_services.impls.InterestApiServiceImpl
 import com.zg.sanctuary.interests.data.repositories.InterestRepository
+import com.zg.sanctuary.posts.data.network.PostApiService
+import com.zg.sanctuary.posts.data.network.impls.PostApiServiceImpl
+import com.zg.sanctuary.posts.data.repositories.PostRepository
 import com.zg.sanctuary.posts.presentation.post_list.PostListViewModel
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModelOf
@@ -42,7 +45,11 @@ val sharedModule = module {
         AuthRepository(authApiService = get(), database = get())
     }
 
-    // PostList
+    // Posts
+    single<PostApiService> { PostApiServiceImpl() }
+    single<PostRepository> {
+        PostRepository(postApiService = get(), database = get())
+    }
 
     // View Models
     viewModelOf(::LoginViewModel)
