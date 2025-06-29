@@ -26,7 +26,7 @@ object HttpClientProvider {
             // Default Options
             install(DefaultRequest){
                 // TODO: - Get from build config later
-                url("http://localhost:8080")
+                url("http://10.0.2.2:8080")
 
                 header("Accept", "application/json")
                 header("Content-Type", "application/json")

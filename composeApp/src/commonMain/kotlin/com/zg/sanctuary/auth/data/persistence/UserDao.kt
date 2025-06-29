@@ -12,7 +12,7 @@ interface UserDao {
     suspend fun saveUser(user: User)
 
     @Query("SELECT * FROM User LIMIT 1")
-    suspend fun getLoggedInUser() : User
+    suspend fun getLoggedInUser() : User?
 
     @Query("DELETE FROM User")
     suspend fun deleteAllUsers()

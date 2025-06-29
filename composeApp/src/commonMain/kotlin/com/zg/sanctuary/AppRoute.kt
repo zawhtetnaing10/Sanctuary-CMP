@@ -3,6 +3,11 @@ package com.zg.sanctuary
 import kotlinx.serialization.Serializable
 
 sealed interface AppRoute {
+
+    // Splash
+    @Serializable
+    data object Splash: AppRoute
+
     // Auth
     @Serializable
     data object AuthGraph : AppRoute

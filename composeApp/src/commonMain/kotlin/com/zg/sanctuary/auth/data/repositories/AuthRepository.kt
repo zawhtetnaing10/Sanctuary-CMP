@@ -49,21 +49,30 @@ class AuthRepository(
         onSuccess: (User) -> Unit,
         onFailure: (String) -> Unit
     ) {
-        val loggedInUser: User = database.userDao().getLoggedInUser()
-        authApiService.updateUser(
-            profileImage = profileImage,
-            fullName = fullName,
-            userName = userName,
-            dob = dob,
-            chosenInterests = chosenInterests,
-            authToken = loggedInUser.getBearerToken()
-        ).onSuccess {
-            onSuccess(it)
-            // Save user in db
-            database.userDao().deleteAllUsers()
-            database.userDao().saveUser(it)
-        }.onError {
-            onFailure(it.error)
+        val loggedInUser: User? = database.userDao().getLoggedInUser()
+        loggedInUser?.let {
+            authApiService.updateUser(
+                profileImage = profileImage,
+                fullName = fullName,
+                userName = userName,
+                dob = dob,
+                chosenInterests = chosenInterests,
+                authToken = it.getBearerToken()
+            ).onSuccess {
+                onSuccess(it)
+                // Save user in db
+                database.userDao().deleteAllUsers()
+                database.userDao().saveUser(it)
+            }.onError {
+                onFailure(it.error)
+            }
+        } ?: run {
+            onFailure("User is not logged in. Please close the app, re-open the app and try again.")
         }
+    }
+
+    suspend fun isUserLoggedIn() : Boolean {
+        val loggedInUser = database.userDao().getLoggedInUser()
+        return loggedInUser != null
     }
 }
