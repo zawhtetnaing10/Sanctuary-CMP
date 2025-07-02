@@ -18,6 +18,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
+import com.zg.sanctuary.auth.domain.User
 import com.zg.sanctuary.core.HINT_COLOR
 import com.zg.sanctuary.core.MARGIN_MEDIUM
 import com.zg.sanctuary.core.MARGIN_MEDIUM_2
@@ -25,20 +27,25 @@ import com.zg.sanctuary.core.MARGIN_MEDIUM_3
 import com.zg.sanctuary.core.MARGIN_XXLARGE
 import com.zg.sanctuary.core.TEXT_REGULAR
 import com.zg.sanctuary.core.TEXT_SMALL
+import com.zg.sanctuary.posts.domain.Post
 import org.jetbrains.compose.resources.painterResource
 import sanctuary.composeapp.generated.resources.Res
+import sanctuary.composeapp.generated.resources.image_loading_error
+import sanctuary.composeapp.generated.resources.loading_skeleton
 import sanctuary.composeapp.generated.resources.sample_profile_picture
 
 @Composable
-fun PostUserInformation(modifier : Modifier = Modifier){
+fun PostUserInformation(post: Post, modifier : Modifier = Modifier){
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier.fillMaxWidth()
     ) {
-        Image(
-            painter = painterResource(Res.drawable.sample_profile_picture),
-            contentDescription = null,
+        AsyncImage(
+            model = post.user.profileImageUrl,
+            contentDescription = "User profile image",
             contentScale = ContentScale.Crop,
+            placeholder = painterResource(Res.drawable.loading_skeleton),
+            error = painterResource(Res.drawable.image_loading_error),
             modifier = Modifier
                 .size(MARGIN_XXLARGE)
                 .clip(CircleShape)
@@ -48,13 +55,13 @@ fun PostUserInformation(modifier : Modifier = Modifier){
         Column(verticalArrangement = Arrangement.spacedBy(0.dp)) {
             // Name
             Text(
-                text = "Chloe Bennett",
+                text = post.user.fullName,
                 fontSize = TEXT_REGULAR,
                 fontWeight = FontWeight.Bold,
             )
             // Date
             Text(
-                "1 hour ago",
+                post.formatPostTime(),
                 color = HINT_COLOR,
                 fontSize = TEXT_SMALL
             )

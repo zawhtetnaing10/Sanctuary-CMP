@@ -29,7 +29,7 @@ data class User(
     @SerialName("access_token")
     var accessToken: String?,
     @SerialName("interests")
-    val interests: List<Interest>
+    val interests: List<Interest>?
 ) {
     fun getBearerToken(): String = "Bearer $accessToken"
 }

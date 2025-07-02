@@ -33,6 +33,7 @@ fun PostDetailsAppbar(
 
         Spacer(modifier = Modifier.width(MARGIN_CARD_MEDIUM_2))
 
-        PostUserInformation()
+        // TODO: - Uncomment after finishing post list
+        //PostUserInformation()
     }
 }

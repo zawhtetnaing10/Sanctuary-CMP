@@ -42,7 +42,7 @@ fun App() {
     LaunchedEffect (Unit){
         // Show splash screen for 3 seconds.
         delay(timeMillis = 2000)
-        startDestination  = if(authRepo.isUserLoggedIn()) AppRoute.Home else AppRoute.Login
+        startDestination  = if(authRepo.isUserLoggedIn()) AppRoute.Home else AppRoute.AuthGraph
     }
 
     MaterialTheme(

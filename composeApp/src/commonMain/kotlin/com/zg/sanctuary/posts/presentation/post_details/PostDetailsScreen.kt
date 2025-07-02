@@ -50,16 +50,16 @@ fun PostDetailsScreen() {
                     // Post Data
                     Column(modifier = Modifier.padding(top = MARGIN_MEDIUM_2)) {
                         // Content
-                        PostContent(onPostClicked = {})
+                        //PostContent(onPostClicked = {})
 
                         Spacer(modifier = Modifier.height(MARGIN_CARD_MEDIUM_2))
 
                         // Like, Comment and Share
-                        LikeCommentAndShareButtons(
-                            onLikeClicked = {},
-                            onCommentClicked = {},
-                            onShareClicked = { },
-                        )
+//                        LikeCommentAndShareButtons(
+//                            onLikeClicked = {},
+//                            onCommentClicked = {},
+//                            onShareClicked = { },
+//                        )
                     }
                 }
 

@@ -1,6 +1,5 @@
 package com.zg.sanctuary.posts.presentation.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,18 +10,21 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import coil3.compose.AsyncImage
 import com.zg.sanctuary.core.MARGIN_CARD_MEDIUM_2
 import com.zg.sanctuary.core.MARGIN_MEDIUM_2
 import com.zg.sanctuary.core.POST_IMAGE_HEIGHT
+import com.zg.sanctuary.posts.domain.Post
 import org.jetbrains.compose.resources.painterResource
 import sanctuary.composeapp.generated.resources.Res
-import sanctuary.composeapp.generated.resources.placeholder_post_image
+import sanctuary.composeapp.generated.resources.image_loading_error
+import sanctuary.composeapp.generated.resources.loading_skeleton
 
 @Composable
-fun PostContent(onPostClicked: () -> Unit, modifier: Modifier = Modifier) {
+fun PostContent(post: Post, onPostClicked: () -> Unit, modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
         Text(
-            "I'm so excited to share my latest travel adventure with you all! I've been exploring the hidden gems of the Italian countryside, and the scenery is absolutely breathtaking. From rolling hills to charming villages, every corner is a postcard-worthy moment. Stay tuned for more updates and photos!",
+            post.content,
             modifier = Modifier.padding(horizontal = MARGIN_MEDIUM_2)
                 .clickable(indication = null, interactionSource = null, onClick = { onPostClicked() })
         )
@@ -30,13 +32,17 @@ fun PostContent(onPostClicked: () -> Unit, modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(MARGIN_CARD_MEDIUM_2))
 
         // Post Image
-        Image(
-            painter = painterResource(Res.drawable.placeholder_post_image),
-            contentDescription = null,
-            contentScale = ContentScale.Crop, // Crop to fill bounds
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(POST_IMAGE_HEIGHT)
-        )
+        if(post.mediaUrl.isNotEmpty()){
+            AsyncImage(
+                model = post.mediaUrl,
+                contentDescription = "Post image",
+                contentScale = ContentScale.Crop,
+                placeholder = painterResource(Res.drawable.loading_skeleton),
+                error = painterResource(Res.drawable.image_loading_error),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(POST_IMAGE_HEIGHT)
+            )
+        }
     }
 }

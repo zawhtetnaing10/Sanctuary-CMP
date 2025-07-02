@@ -6,19 +6,43 @@ import com.zg.sanctuary.core.data.network.onError
 import com.zg.sanctuary.core.data.network.onSuccess
 import com.zg.sanctuary.core.persistence.SanctuaryDatabase
 import com.zg.sanctuary.posts.data.network.PostApiService
+import com.zg.sanctuary.posts.data.network.responses.MetaResponse
 import com.zg.sanctuary.posts.domain.Post
 
 class PostRepository(
     private val postApiService: PostApiService,
     private val database: SanctuaryDatabase
 ) {
-    suspend fun getPosts(onSuccess: (List<Post>) -> Unit, onFailure: (String) -> Unit) {
+    suspend fun getPosts(onSuccess: (MetaResponse) -> Unit, onFailure: (String) -> Unit) {
         val loggedInUser: User? = database.userDao().getLoggedInUser()
 
         loggedInUser?.let {
             val accessToken = it.getBearerToken()
 
             postApiService.getPosts(accessToken)
+                .onSuccess {
+                    onSuccess(it)
+                    // TODO: - Save to db
+                }.onError {
+                    onFailure(it.error)
+                }
+        } ?: run {
+            onFailure("User is not logged in.")
+        }
+    }
+
+    suspend fun getMorePosts(page: Int, onSuccess: (MetaResponse?) -> Unit, onFailure: (String) -> Unit){
+        if (page == 0){
+            onSuccess(null)
+            return
+        }
+
+        val loggedInUser: User? = database.userDao().getLoggedInUser()
+
+        loggedInUser?.let {
+            val accessToken = it.getBearerToken()
+
+            postApiService.getMorePosts(page, accessToken)
                 .onSuccess {
                     onSuccess(it)
                     // TODO: - Save to db

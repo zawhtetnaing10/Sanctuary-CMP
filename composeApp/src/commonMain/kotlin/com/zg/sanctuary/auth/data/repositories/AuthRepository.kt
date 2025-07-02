@@ -14,8 +14,8 @@ class AuthRepository(
 ) {
     suspend fun login(email: String, password: String, onSuccess: (User) -> Unit, onFailure: (String) -> Unit) {
         authApiService.login(
-            email = email,
-            password = password
+            email = email.trim(),
+            password = password.trim()
         ).onSuccess {
             onSuccess(it)
             // Delete all users from db then save. Only one user can be logged in at any time.

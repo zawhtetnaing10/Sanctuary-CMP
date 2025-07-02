@@ -12,6 +12,7 @@ import com.zg.sanctuary.core.utils.ImageFormatDetector
 import com.zg.sanctuary.posts.data.network.PostApiService
 import com.zg.sanctuary.posts.data.network.requests.CreateCommentRequest
 import com.zg.sanctuary.posts.data.network.requests.RequestWithPostId
+import com.zg.sanctuary.posts.data.network.responses.MetaResponse
 import com.zg.sanctuary.posts.domain.Post
 import io.ktor.client.request.forms.formData
 import io.ktor.client.request.forms.submitFormWithBinaryData
@@ -25,9 +26,20 @@ import io.ktor.http.HttpHeaders
 import kotlinx.datetime.Clock
 
 class PostApiServiceImpl : PostApiService {
-    override suspend fun getPosts(accessToken: String): SanctuaryResult<List<Post>, SanctuaryError> {
-        return safeCall<List<Post>> {
+    override suspend fun getPosts(accessToken: String): SanctuaryResult<MetaResponse, SanctuaryError> {
+        return safeCall<MetaResponse> {
             HttpClientProvider.httpClient.get(ENDPOINT_POSTS) {
+                header(HttpHeaders.Authorization, accessToken)
+            }
+        }
+    }
+
+    override suspend fun getMorePosts(
+        page: Int,
+        accessToken: String
+    ): SanctuaryResult<MetaResponse, SanctuaryError> {
+        return safeCall<MetaResponse> {
+            HttpClientProvider.httpClient.get("$ENDPOINT_POSTS?page=$page") {
                 header(HttpHeaders.Authorization, accessToken)
             }
         }
@@ -92,6 +104,9 @@ class PostApiServiceImpl : PostApiService {
         )
         return safeCall<Unit> {
             HttpClientProvider.httpClient.post(ENDPOINT_POST_LIKE) {
+
+                header(HttpHeaders.Authorization, accessToken)
+
                 setBody(request)
             }
         }
@@ -106,6 +121,9 @@ class PostApiServiceImpl : PostApiService {
         )
         return safeCall<List<Comment>> {
             HttpClientProvider.httpClient.get(ENDPOINT_COMMENTS) {
+
+                header(HttpHeaders.Authorization, accessToken)
+
                 setBody(request)
             }
         }
@@ -122,6 +140,9 @@ class PostApiServiceImpl : PostApiService {
         )
         return safeCall<Comment> {
             HttpClientProvider.httpClient.post(ENDPOINT_COMMENTS) {
+
+                header(HttpHeaders.Authorization, accessToken)
+
                 setBody(request)
             }
         }

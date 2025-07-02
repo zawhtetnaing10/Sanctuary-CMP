@@ -7,4 +7,7 @@ sealed interface PostListAction {
     data class OnTapLike(val id: Int) : PostListAction
     data class OnTapComment(val id: Int) : PostListAction
     data class OnTapShare(val id: Int) : PostListAction
+    class OnPostListScreenReached() : PostListAction
+    class OnListEndReached() : PostListAction
+    class OnErrorDialogDismissed() : PostListAction
 }

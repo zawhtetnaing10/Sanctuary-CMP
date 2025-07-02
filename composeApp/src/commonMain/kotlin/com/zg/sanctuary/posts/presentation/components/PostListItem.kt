@@ -36,6 +36,7 @@ import com.zg.sanctuary.core.MARGIN_XXLARGE
 import com.zg.sanctuary.core.POST_IMAGE_HEIGHT
 import com.zg.sanctuary.core.TEXT_SMALL
 import com.zg.sanctuary.core.TEXT_SMALL_2X
+import com.zg.sanctuary.posts.domain.Post
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import sanctuary.composeapp.generated.resources.Res
@@ -47,6 +48,7 @@ import sanctuary.composeapp.generated.resources.sanctuary_share
 
 @Composable
 fun PostListItem(
+    post : Post,
     onLikeClicked: () -> Unit,
     onCommentClicked: () -> Unit,
     onShareClicked: () -> Unit,
@@ -57,18 +59,19 @@ fun PostListItem(
 
         // Profile Image and Name
         PostUserInformation(
-            modifier = Modifier.padding(top = MARGIN_MEDIUM_3, start = MARGIN_MEDIUM_2, end = MARGIN_MEDIUM_2)
+            post = post,modifier = Modifier.padding(top = MARGIN_MEDIUM_3, start = MARGIN_MEDIUM_2, end = MARGIN_MEDIUM_2)
         )
 
         Spacer(modifier = Modifier.height(MARGIN_CARD_MEDIUM_2))
 
         // Content
-        PostContent(onPostClicked = onPostClicked)
+        PostContent(post = post, onPostClicked = onPostClicked)
 
         Spacer(modifier = Modifier.height(MARGIN_CARD_MEDIUM_2))
 
         // Like, Comment and Share
         LikeCommentAndShareButtons(
+            post = post,
             onLikeClicked = onLikeClicked,
             onCommentClicked = onCommentClicked,
             onShareClicked = onShareClicked,

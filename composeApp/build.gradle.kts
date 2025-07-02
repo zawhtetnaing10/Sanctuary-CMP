@@ -67,6 +67,10 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
             api(libs.koin.core)
+
+            // Coil
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.okhttp)
         }
 
         nativeMain.dependencies {
