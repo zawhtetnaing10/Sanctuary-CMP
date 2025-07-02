@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import com.zg.sanctuary.comments.domain.Comment
 import com.zg.sanctuary.core.HINT_COLOR
 import com.zg.sanctuary.core.MARGIN_40
 import com.zg.sanctuary.core.MARGIN_MEDIUM
@@ -25,7 +26,7 @@ import sanctuary.composeapp.generated.resources.Res
 import sanctuary.composeapp.generated.resources.sample_profile_picture
 
 @Composable
-fun CommentListItem(modifier : Modifier = Modifier){
+fun CommentListItem(comment: Comment, modifier : Modifier = Modifier){
     Row(
         verticalAlignment = Alignment.Top,
         modifier = modifier.padding(MARGIN_MEDIUM_2)
@@ -44,23 +45,17 @@ fun CommentListItem(modifier : Modifier = Modifier){
         Column {
             Row{
                 Text(
-                    text = "David James",
+                    text = comment.user.fullName,
                     fontWeight = FontWeight.Bold,
                 )
                 Spacer(modifier = Modifier.width(MARGIN_MEDIUM))
                 Text(
-                    text = "Nov 12",
+                    text = comment.formatCommentTime(),
                     color = HINT_COLOR
                 )
             }
 
-            Text("Yes, I'll be there! The keynote on AI ethics should be fascinating.")
+            Text(comment.content)
         }
     }
-}
-
-@Preview
-@Composable
-fun CommentListItemPreview() {
-    CommentListItem()
 }

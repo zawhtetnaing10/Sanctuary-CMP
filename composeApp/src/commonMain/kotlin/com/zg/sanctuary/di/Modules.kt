@@ -1,6 +1,5 @@
 package com.zg.sanctuary.di
 
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import com.zg.sanctuary.auth.data.network.api_services.AuthApiService
 import com.zg.sanctuary.auth.data.network.api_services.impls.AuthApiServiceImpl
@@ -16,8 +15,10 @@ import com.zg.sanctuary.interests.data.repositories.InterestRepository
 import com.zg.sanctuary.posts.data.network.PostApiService
 import com.zg.sanctuary.posts.data.network.impls.PostApiServiceImpl
 import com.zg.sanctuary.posts.data.repositories.PostRepository
+import com.zg.sanctuary.posts.presentation.post_details.PostDetailsViewModel
 import com.zg.sanctuary.posts.presentation.post_list.PostListViewModel
 import org.koin.core.module.Module
+import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
@@ -56,4 +57,11 @@ val sharedModule = module {
     viewModelOf(::CreateAccountViewModel)
     viewModelOf(::PersonalInformationViewModel)
     viewModelOf(::PostListViewModel)
+
+    viewModel { params ->
+        PostDetailsViewModel(
+            postId = params.get(),
+            postRepository = get()
+        )
+    }
 }

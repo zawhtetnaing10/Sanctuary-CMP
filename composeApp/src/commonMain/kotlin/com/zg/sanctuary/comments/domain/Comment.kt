@@ -1,6 +1,7 @@
 package com.zg.sanctuary.comments.domain
 
 import com.zg.sanctuary.auth.domain.User
+import com.zg.sanctuary.core.utils.DateUtils
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -15,9 +16,13 @@ data class Comment(
     @SerialName("updated_at")
     val updatedAt: String,
     @SerialName("post_id")
-    val postId : Int,
+    val postId: Int,
     @SerialName("user_id")
-    val userId : Int,
+    val userId: Int,
     @SerialName("user")
-    val user : User
-)
+    val user: User
+) {
+    fun formatCommentTime(): String {
+        return DateUtils.formatMonthDay(createdAt)
+    }
+}

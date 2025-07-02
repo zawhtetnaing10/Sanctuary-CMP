@@ -22,7 +22,6 @@ class PostRepository(
             postApiService.getPosts(accessToken)
                 .onSuccess {
                     onSuccess(it)
-                    // TODO: - Save to db
                 }.onError {
                     onFailure(it.error)
                 }
@@ -45,7 +44,6 @@ class PostRepository(
             postApiService.getMorePosts(page, accessToken)
                 .onSuccess {
                     onSuccess(it)
-                    // TODO: - Save to db
                 }.onError {
                     onFailure(it.error)
                 }

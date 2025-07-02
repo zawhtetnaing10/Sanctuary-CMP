@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -25,24 +26,25 @@ import com.zg.sanctuary.core.BeVietnamProTypography
 import com.zg.sanctuary.home.presentation.HomeRoute
 import com.zg.sanctuary.posts.presentation.create_post.CreatePostRoute
 import com.zg.sanctuary.posts.presentation.post_details.PostDetailsRoute
+import com.zg.sanctuary.posts.presentation.post_details.PostDetailsViewModel
 import com.zg.sanctuary.splash.presentation.SplashScreen
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.koin.compose.getKoin
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
 @Preview
 fun App() {
 
-    val authRepo : AuthRepository = koinInject<AuthRepository>()
-    var startDestination : AppRoute by remember { mutableStateOf(AppRoute.Splash) }
+    val authRepo: AuthRepository = koinInject<AuthRepository>()
+    var startDestination: AppRoute by remember { mutableStateOf(AppRoute.Splash) }
 
-    LaunchedEffect (Unit){
+    LaunchedEffect(Unit) {
         // Show splash screen for 3 seconds.
         delay(timeMillis = 2000)
-        startDestination  = if(authRepo.isUserLoggedIn()) AppRoute.Home else AppRoute.AuthGraph
+        startDestination = if (authRepo.isUserLoggedIn()) AppRoute.Home else AppRoute.AuthGraph
     }
 
     MaterialTheme(
@@ -135,9 +137,15 @@ fun App() {
                 val args = backStackEntry.toRoute<AppRoute.PostDetails>()
                 val postId = args.postId
 
-                // TODO: - Set up view model here
+                // View Model
+                val postDetailsViewModel = koinViewModel<PostDetailsViewModel>(parameters = { parametersOf(postId) })
 
-                PostDetailsRoute()
+                PostDetailsRoute(
+                    viewModel = postDetailsViewModel,
+                    onNavigateBack = {
+                        navController.navigateUp()
+                    }
+                )
             }
 
             // Create Post

@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.zg.sanctuary.core.HINT_COLOR
+import com.zg.sanctuary.core.MARGIN_56
 import com.zg.sanctuary.core.MARGIN_CARD_MEDIUM_2
 import com.zg.sanctuary.core.TEXT_FIELD_BACKGROUND_COLOR
 import com.zg.sanctuary.core.TEXT_REGULAR_2X
@@ -21,6 +22,7 @@ fun SanctuaryTextField(
     inputText: String,
     onInputChanged: (String) -> Unit,
     hint: String,
+    fillMaxWidth: Boolean = true,
     isEnabled: Boolean = true,
     modifier: Modifier = Modifier
 ) {
@@ -43,14 +45,16 @@ fun SanctuaryTextField(
             disabledTextColor = Color.Black
         ),
         shape = RoundedCornerShape(MARGIN_CARD_MEDIUM_2),
-        modifier = modifier.fillMaxWidth()
-            .height(56.dp)
+        modifier =
+            if (fillMaxWidth)
+                modifier.fillMaxWidth().height(MARGIN_56)
+            else modifier.height(MARGIN_56)
     )
 }
 
 @Preview()
 @Composable
-fun SanctuaryTextFieldPreview(){
+fun SanctuaryTextFieldPreview() {
     SanctuaryTextField(
         inputText = "",
         onInputChanged = {},

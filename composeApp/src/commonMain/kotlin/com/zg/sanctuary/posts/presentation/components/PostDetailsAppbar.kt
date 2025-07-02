@@ -18,12 +18,14 @@ import com.zg.sanctuary.core.MARGIN_56
 import com.zg.sanctuary.core.MARGIN_CARD_MEDIUM_2
 import com.zg.sanctuary.core.MARGIN_MEDIUM
 import com.zg.sanctuary.core.MARGIN_XLARGE
+import com.zg.sanctuary.posts.domain.Post
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PostDetailsAppbar(
+    post: Post,
     onTapBack: () -> Unit,
-    modifier : Modifier = Modifier
+    modifier: Modifier = Modifier
 ) {
     Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier.height(MARGIN_56)) {
         Icon(
@@ -33,7 +35,8 @@ fun PostDetailsAppbar(
 
         Spacer(modifier = Modifier.width(MARGIN_CARD_MEDIUM_2))
 
-        // TODO: - Uncomment after finishing post list
-        //PostUserInformation()
+        PostUserInformation(
+            post = post
+        )
     }
 }

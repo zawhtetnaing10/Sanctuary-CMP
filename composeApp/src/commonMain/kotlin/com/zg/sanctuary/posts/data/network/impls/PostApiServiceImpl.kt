@@ -116,15 +116,9 @@ class PostApiServiceImpl : PostApiService {
         postId: Int,
         accessToken: String
     ): SanctuaryResult<List<Comment>, SanctuaryError> {
-        val request = RequestWithPostId(
-            postId = postId
-        )
         return safeCall<List<Comment>> {
-            HttpClientProvider.httpClient.get(ENDPOINT_COMMENTS) {
-
+            HttpClientProvider.httpClient.get("$ENDPOINT_COMMENTS?post_id=$postId") {
                 header(HttpHeaders.Authorization, accessToken)
-
-                setBody(request)
             }
         }
     }
