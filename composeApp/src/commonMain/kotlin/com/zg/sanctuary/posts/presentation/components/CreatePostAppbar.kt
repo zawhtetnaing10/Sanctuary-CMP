@@ -57,7 +57,7 @@ fun CreatePostAppbar(
                     fontWeight = FontWeight.Bold,
                     color = POST_BUTTON_COLOR,
                     modifier = Modifier
-                        .clickable { onTapPost })
+                        .clickable { onTapPost() })
             }
         }
     )

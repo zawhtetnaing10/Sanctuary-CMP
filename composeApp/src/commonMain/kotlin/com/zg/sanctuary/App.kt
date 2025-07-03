@@ -25,6 +25,7 @@ import com.zg.sanctuary.auth.presentation.personal_information.PersonalInformati
 import com.zg.sanctuary.core.BeVietnamProTypography
 import com.zg.sanctuary.home.presentation.HomeRoute
 import com.zg.sanctuary.posts.presentation.create_post.CreatePostRoute
+import com.zg.sanctuary.posts.presentation.create_post.CreatePostViewModel
 import com.zg.sanctuary.posts.presentation.post_details.PostDetailsRoute
 import com.zg.sanctuary.posts.presentation.post_details.PostDetailsViewModel
 import com.zg.sanctuary.splash.presentation.SplashScreen
@@ -154,7 +155,14 @@ fun App() {
                 popEnterTransition = { popEnterTransition },
                 popExitTransition = { popExitTransition }
             ) {
-                CreatePostRoute()
+                val viewModel = koinViewModel<CreatePostViewModel>()
+
+                CreatePostRoute(
+                    viewModel = viewModel,
+                    onNavigateBack = {
+                        navController.navigateUp()
+                    }
+                )
             }
         }
     }

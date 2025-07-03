@@ -15,6 +15,7 @@ import com.zg.sanctuary.interests.data.repositories.InterestRepository
 import com.zg.sanctuary.posts.data.network.PostApiService
 import com.zg.sanctuary.posts.data.network.impls.PostApiServiceImpl
 import com.zg.sanctuary.posts.data.repositories.PostRepository
+import com.zg.sanctuary.posts.presentation.create_post.CreatePostViewModel
 import com.zg.sanctuary.posts.presentation.post_details.PostDetailsViewModel
 import com.zg.sanctuary.posts.presentation.post_list.PostListViewModel
 import org.koin.core.module.Module
@@ -64,4 +65,6 @@ val sharedModule = module {
             postRepository = get()
         )
     }
+
+    viewModelOf(::CreatePostViewModel)
 }

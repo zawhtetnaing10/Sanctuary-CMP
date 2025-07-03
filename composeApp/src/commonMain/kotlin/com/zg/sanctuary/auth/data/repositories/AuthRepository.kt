@@ -71,7 +71,11 @@ class AuthRepository(
         }
     }
 
-    suspend fun isUserLoggedIn() : Boolean {
+    suspend fun getLoggedInUser(): User? {
+        return database.userDao().getLoggedInUser()
+    }
+
+    suspend fun isUserLoggedIn(): Boolean {
         val loggedInUser = database.userDao().getLoggedInUser()
         return loggedInUser != null
     }

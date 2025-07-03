@@ -68,6 +68,8 @@ import sanctuary.composeapp.generated.resources.placeholder_profile_picture
 
 @Composable
 fun CreatePostInput(
+    content : String,
+    onContentChanged : (String) -> Unit,
     onImagePicked : (ByteArray) -> Unit,
     onDeleteImage : () -> Unit
 ) {
@@ -156,8 +158,10 @@ fun CreatePostInput(
             Box {
                 // Input Box
                 TextField(
-                    value = "",
-                    onValueChange = { },
+                    value = content,
+                    onValueChange = {
+                        onContentChanged(it)
+                    },
                     colors = TextFieldDefaults.colors(
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
