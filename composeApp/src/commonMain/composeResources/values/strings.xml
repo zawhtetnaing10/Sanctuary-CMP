@@ -27,4 +27,6 @@
     <string name="create_post_label">What's on your mind?</string>
     <string name="new_post">New Post</string>
     <string name="post">Post</string>
+    <string name="friend_requests">Friend Requests</string>
+    <string name="friends">My Friends</string>
 </resources>

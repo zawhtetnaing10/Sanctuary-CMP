@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.zg.sanctuary.auth.presentation.login.LoginActions
+import com.zg.sanctuary.core.BOTTOM_SPACING
 import com.zg.sanctuary.core.DIVIDER_COLOR
 import com.zg.sanctuary.core.MARGIN_LARGE
 import com.zg.sanctuary.core.MARGIN_SMALL
@@ -116,7 +117,7 @@ fun PostListScreen(state: PostListState, lazyListState: LazyListState, onAction:
         containerColor = Color.White,
     ) { innerPadding ->
         // Add Body here.
-        LazyColumn(state = lazyListState, modifier = Modifier.padding(innerPadding).padding(bottom = 88.dp)) {
+        LazyColumn(state = lazyListState, modifier = Modifier.padding(innerPadding).padding(bottom = BOTTOM_SPACING)) {
 
             // Appbar
             item {
