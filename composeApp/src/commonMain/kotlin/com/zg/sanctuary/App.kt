@@ -9,7 +9,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -28,6 +27,7 @@ import com.zg.sanctuary.posts.presentation.create_post.CreatePostRoute
 import com.zg.sanctuary.posts.presentation.create_post.CreatePostViewModel
 import com.zg.sanctuary.posts.presentation.post_details.PostDetailsRoute
 import com.zg.sanctuary.posts.presentation.post_details.PostDetailsViewModel
+import com.zg.sanctuary.profile.presentation.ProfileRoute
 import com.zg.sanctuary.splash.presentation.SplashScreen
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -45,7 +45,9 @@ fun App() {
     LaunchedEffect(Unit) {
         // Show splash screen for 3 seconds.
         delay(timeMillis = 2000)
-        startDestination = if (authRepo.isUserLoggedIn()) AppRoute.Home else AppRoute.AuthGraph
+        //startDestination = if (authRepo.isUserLoggedIn()) AppRoute.Home else AppRoute.AuthGraph
+        // TODO: - Change back after testing
+        startDestination = AppRoute.ProfileDetails(0)
     }
 
     MaterialTheme(
@@ -125,6 +127,8 @@ fun App() {
                     navController.navigate(AppRoute.PostDetails(postId))
                 }, onNavigateToCreatePost = {
                     navController.navigate(AppRoute.CreatePost)
+                }, onNavigateToProfile = { userId ->
+                    navController.navigate(AppRoute.ProfileDetails(userId))
                 })
             }
 
@@ -163,6 +167,19 @@ fun App() {
                         navController.navigateUp()
                     }
                 )
+            }
+
+
+            composable<AppRoute.ProfileDetails>(
+                enterTransition = { enterTransition },
+                popEnterTransition = { popEnterTransition },
+                popExitTransition = { popExitTransition }
+            ) { backStackEntry ->
+
+                val args = backStackEntry.toRoute<AppRoute.ProfileDetails>()
+                val userId = args.userId
+
+                ProfileRoute()
             }
         }
     }

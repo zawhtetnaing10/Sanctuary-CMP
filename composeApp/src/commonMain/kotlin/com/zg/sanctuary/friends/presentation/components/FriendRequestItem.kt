@@ -57,6 +57,7 @@ fun FriendRequestItem(
             },
             shape = RoundedCornerShape(MARGIN_CARD_MEDIUM_2),
             color = FR_CONFIRM_BUTTON_BACKGROUND,
+            modifier = Modifier.padding(end = MARGIN_MEDIUM)
         ) {
             Text("Confirm", modifier = Modifier.padding(MARGIN_MEDIUM))
         }

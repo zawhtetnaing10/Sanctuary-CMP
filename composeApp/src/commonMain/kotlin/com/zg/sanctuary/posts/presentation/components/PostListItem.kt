@@ -53,13 +53,16 @@ fun PostListItem(
     onCommentClicked: () -> Unit,
     onShareClicked: () -> Unit,
     onPostClicked: () -> Unit,
+    onUserClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
 
         // Profile Image and Name
         PostUserInformation(
-            post = post,modifier = Modifier.padding(top = MARGIN_MEDIUM_3, start = MARGIN_MEDIUM_2, end = MARGIN_MEDIUM_2)
+            post = post,modifier = Modifier
+                .padding(top = MARGIN_MEDIUM_3, start = MARGIN_MEDIUM_2, end = MARGIN_MEDIUM_2),
+            onUserClicked = onUserClicked
         )
 
         Spacer(modifier = Modifier.height(MARGIN_CARD_MEDIUM_2))

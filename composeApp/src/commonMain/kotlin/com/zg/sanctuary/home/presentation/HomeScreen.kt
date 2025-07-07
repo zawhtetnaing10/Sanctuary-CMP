@@ -24,10 +24,8 @@ import androidx.navigation.compose.rememberNavController
 import com.zg.sanctuary.AppRoute
 import com.zg.sanctuary.core.MARGIN_LARGE
 import com.zg.sanctuary.friends.presentation.FriendsRoute
-import com.zg.sanctuary.posts.presentation.post_list.PostListEvent
 import com.zg.sanctuary.posts.presentation.post_list.PostListRoute
 import com.zg.sanctuary.posts.presentation.post_list.PostListViewModel
-import com.zg.sanctuary.profile.presentation.ProfileRoute
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
 import sanctuary.composeapp.generated.resources.Res
@@ -37,17 +35,19 @@ import sanctuary.composeapp.generated.resources.home_selected
 import sanctuary.composeapp.generated.resources.home_unselected
 
 @Composable
-fun HomeRoute(onNavigateToPostDetails: (Int) -> Unit, onNavigateToCreatePost: () -> Unit) {
+fun HomeRoute(onNavigateToPostDetails: (Int) -> Unit, onNavigateToCreatePost: () -> Unit, onNavigateToProfile: (Int) -> Unit,) {
     HomeScreen(
         onNavigateToPostDetails = onNavigateToPostDetails,
-        onNavigateToCreatePost = onNavigateToCreatePost
+        onNavigateToCreatePost = onNavigateToCreatePost,
+        onNavigateToProfile = onNavigateToProfile
     )
 }
 
 @Composable
 fun HomeScreen(
     onNavigateToPostDetails: (Int) -> Unit,
-    onNavigateToCreatePost : () -> Unit
+    onNavigateToCreatePost : () -> Unit,
+    onNavigateToProfile: (Int) -> Unit,
 ) {
 
     val homeNavController = rememberNavController()
@@ -77,6 +77,9 @@ fun HomeScreen(
                         onNavigateToPostDetails = { postId ->
                             onNavigateToPostDetails(postId)
                         },
+                        onNavigateToProfile = { userId ->
+                            onNavigateToProfile(userId)
+                        }
                     )
                 }
             }
@@ -87,15 +90,6 @@ fun HomeScreen(
             ) {
                 composable<AppRoute.Friends> {
                     FriendsRoute()
-                }
-            }
-
-            // Profile Graph
-            navigation<AppRoute.ProfileGraph>(
-                startDestination = AppRoute.Profile
-            ) {
-                composable<AppRoute.Profile> {
-                    ProfileRoute()
                 }
             }
         }

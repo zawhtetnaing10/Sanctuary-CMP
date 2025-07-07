@@ -6,7 +6,7 @@ sealed interface AppRoute {
 
     // Splash
     @Serializable
-    data object Splash: AppRoute
+    data object Splash : AppRoute
 
     // Auth
     @Serializable
@@ -33,7 +33,7 @@ sealed interface AppRoute {
     data object PostList : AppRoute
 
     @Serializable
-    data class PostDetails(val postId : Int) : AppRoute
+    data class PostDetails(val postId: Int) : AppRoute
 
     @Serializable
     data object CreatePost : AppRoute
@@ -45,11 +45,6 @@ sealed interface AppRoute {
     @Serializable
     data object Friends : AppRoute
 
-    // Profile
     @Serializable
-    data object ProfileGraph : AppRoute
-
-    @Serializable
-    data object Profile : AppRoute
-
+    data class ProfileDetails(val userId: Int) : AppRoute
 }

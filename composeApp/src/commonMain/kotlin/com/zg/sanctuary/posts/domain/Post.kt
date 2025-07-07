@@ -2,14 +2,8 @@ package com.zg.sanctuary.posts.domain
 
 import com.zg.sanctuary.auth.domain.User
 import com.zg.sanctuary.core.utils.DateUtils
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.time.Duration.Companion.days
-import kotlin.time.Duration.Companion.hours
-import kotlin.time.Duration.Companion.minutes
-import kotlin.time.ExperimentalTime
 
 @Serializable
 data class Post(

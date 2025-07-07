@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.AssistChip
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
@@ -16,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import com.zg.sanctuary.core.CHIP_COLOR
 import com.zg.sanctuary.core.MARGIN_MEDIUM
@@ -28,9 +30,10 @@ import com.zg.sanctuary.interests.domain.Interest
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun InterestsSelection(
-    interests : List<Interest>,
-    chosenInterests : Set<Interest>,
-    onInterestPicked : (Interest) -> Unit,
+    interests: List<Interest>,
+    chosenInterests: Set<Interest>,
+    onInterestPicked: (Interest) -> Unit,
+    allowSelection: Boolean = true,
     modifier: Modifier = Modifier
 ) {
 
@@ -45,8 +48,9 @@ fun InterestsSelection(
 
             FilterChip(
                 selected = isSelected,
+                enabled = allowSelection,
                 label = {
-                    Text(interest.name, fontWeight = FontWeight.Medium, fontSize = TEXT_REGULAR)
+                    Text(interest.name, fontWeight = FontWeight.Medium, fontSize = TEXT_REGULAR, color = Color.Black)
                 },
                 shape = RoundedCornerShape(MARGIN_MEDIUM_2),
                 onClick = {
@@ -63,6 +67,7 @@ fun InterestsSelection(
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = CHIP_COLOR,
                     selectedContainerColor = PRIMARY_COLOR,
+                    disabledContainerColor = CHIP_COLOR,
                 ),
                 modifier = Modifier.height(MARGIN_XLARGE)
             )

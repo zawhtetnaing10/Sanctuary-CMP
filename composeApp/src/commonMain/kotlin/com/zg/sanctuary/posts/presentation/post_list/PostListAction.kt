@@ -10,4 +10,5 @@ sealed interface PostListAction {
     class OnPostListScreenReached() : PostListAction
     class OnListEndReached() : PostListAction
     class OnErrorDialogDismissed() : PostListAction
+    class OnTapProfile(val userId : Int) : PostListAction
 }

@@ -2,6 +2,7 @@ package com.zg.sanctuary.posts.presentation.post_list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.zg.sanctuary.auth.data.repositories.AuthRepository
 import com.zg.sanctuary.posts.data.repositories.PostRepository
 import com.zg.sanctuary.posts.domain.Post
 import com.zg.sanctuary.posts.presentation.post_list.PostListEvent.*
@@ -14,7 +15,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class PostListViewModel(
-    private val postRepository: PostRepository
+    private val postRepository: PostRepository,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
     // State
     private val _state = MutableStateFlow<PostListState>(PostListState())
@@ -37,10 +39,16 @@ class PostListViewModel(
                         },
                         onFailure = { errMsg ->
                             _state.update {
-                                it.copy(error= errMsg)
+                                it.copy(error = errMsg)
                             }
                         }
                     )
+
+                    // Get Logged In User
+                    val loggedInUser = authRepository.getLoggedInUser()
+                    _state.update {
+                        it.copy(loggedInUser = loggedInUser)
+                    }
                 }
             }
 
@@ -86,9 +94,9 @@ class PostListViewModel(
 
             is PostListAction.OnTapLike -> {
                 // Update like state
-                val tempPosts : List<Post> = _state.value.posts.map {
-                    if(it.id == action.id){
-                        val likeCount = if(it.likedByUser) it.likeCount - 1 else it.likeCount + 1
+                val tempPosts: List<Post> = _state.value.posts.map {
+                    if (it.id == action.id) {
+                        val likeCount = if (it.likedByUser) it.likeCount - 1 else it.likeCount + 1
                         it.copy(likedByUser = !it.likedByUser, likeCount = likeCount)
                     } else {
                         it
@@ -125,6 +133,12 @@ class PostListViewModel(
             is PostListAction.OnErrorDialogDismissed -> {
                 _state.update {
                     it.copy(error = "")
+                }
+            }
+
+            is PostListAction.OnTapProfile -> {
+                viewModelScope.launch {
+                    _events.send(NavigateToUserProfile(action.userId))
                 }
             }
         }

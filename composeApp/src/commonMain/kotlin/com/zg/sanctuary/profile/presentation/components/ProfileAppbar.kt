@@ -1,4 +1,4 @@
-package com.zg.sanctuary.posts.presentation.components
+package com.zg.sanctuary.profile.presentation.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -9,24 +9,20 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import com.zg.sanctuary.core.MARGIN_56
 import com.zg.sanctuary.core.MARGIN_CARD_MEDIUM_2
 import com.zg.sanctuary.core.MARGIN_MEDIUM
 import com.zg.sanctuary.core.MARGIN_XLARGE
-import com.zg.sanctuary.posts.domain.Post
+import com.zg.sanctuary.core.TEXT_REGULAR_4X
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PostDetailsAppbar(
-    post: Post,
-    onTapBack: () -> Unit,
-    modifier: Modifier = Modifier
-) {
+fun ProfileAppbar(onTapBack: () -> Unit, modifier: Modifier = Modifier) {
     Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier.height(MARGIN_56)) {
         Icon(
             Icons.AutoMirrored.Default.KeyboardArrowLeft,
@@ -35,9 +31,10 @@ fun PostDetailsAppbar(
 
         Spacer(modifier = Modifier.width(MARGIN_CARD_MEDIUM_2))
 
-        PostUserInformation(
-            post = post,
-            onUserClicked = {}
+        Text(
+            "Profile",
+            fontSize = TEXT_REGULAR_4X,
+            fontWeight = FontWeight.Bold
         )
     }
 }

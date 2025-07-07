@@ -1,6 +1,7 @@
 package com.zg.sanctuary.posts.presentation.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -35,7 +36,7 @@ import sanctuary.composeapp.generated.resources.loading_skeleton
 import sanctuary.composeapp.generated.resources.sample_profile_picture
 
 @Composable
-fun PostUserInformation(post: Post, modifier : Modifier = Modifier){
+fun PostUserInformation(post: Post, onUserClicked: () -> Unit, modifier : Modifier = Modifier){
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier.fillMaxWidth()
@@ -49,6 +50,9 @@ fun PostUserInformation(post: Post, modifier : Modifier = Modifier){
             modifier = Modifier
                 .size(MARGIN_XXLARGE)
                 .clip(CircleShape)
+                .clickable {
+                    onUserClicked()
+                }
         )
         Spacer(modifier = Modifier.width(MARGIN_MEDIUM))
 
