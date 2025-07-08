@@ -3,6 +3,7 @@ package com.zg.sanctuary.auth.data.network.api_services
 import com.zg.sanctuary.core.data.network.SanctuaryResult
 import com.zg.sanctuary.core.domain.SanctuaryError
 import com.zg.sanctuary.auth.domain.User
+import com.zg.sanctuary.profile.domain.UserProfileDetails
 import com.zg.sanctuary.interests.domain.Interest
 
 interface AuthApiService {

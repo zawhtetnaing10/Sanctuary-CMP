@@ -25,6 +25,7 @@ import com.zg.sanctuary.posts.domain.Post
 fun PostDetailsAppbar(
     post: Post,
     onTapBack: () -> Unit,
+    onTapUserProfile: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier.height(MARGIN_56)) {
@@ -37,7 +38,9 @@ fun PostDetailsAppbar(
 
         PostUserInformation(
             post = post,
-            onUserClicked = {}
+            onUserClicked = {
+                onTapUserProfile()
+            }
         )
     }
 }

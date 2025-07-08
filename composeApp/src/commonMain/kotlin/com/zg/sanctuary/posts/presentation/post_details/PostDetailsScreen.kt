@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -27,14 +26,16 @@ import com.zg.sanctuary.posts.presentation.components.PostDetailsAppbar
 import com.zg.sanctuary.posts.presentation.components.SortCommentsDropDown
 import com.zg.sanctuary.posts.presentation.components.WriteComment
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.platform.LocalFocusManager
 import com.zg.sanctuary.posts.presentation.components.LikeCommentAndShareButtons
 import com.zg.sanctuary.posts.presentation.components.PostContent
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun PostDetailsRoute(viewModel: PostDetailsViewModel, onNavigateBack: () -> Unit) {
+fun PostDetailsRoute(
+    viewModel: PostDetailsViewModel, onNavigateBack: () -> Unit,
+    onNavigateToProfile: (Int) -> Unit
+) {
 
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -49,6 +50,10 @@ fun PostDetailsRoute(viewModel: PostDetailsViewModel, onNavigateBack: () -> Unit
 
                 PostDetailsEvent.RemoveFocus -> {
                     focusManager.clearFocus()
+                }
+
+                is PostDetailsEvent.NavigateToUserProfile -> {
+                    onNavigateToProfile(it.userId)
                 }
             }
         }
@@ -75,6 +80,9 @@ fun PostDetailsScreen(
                     post = state.post,
                     onTapBack = {
                         onAction(PostDetailsAction.OnTapBack())
+                    },
+                    onTapUserProfile = {
+                        onAction(PostDetailsAction.OnTapUserProfile(state.post.user.id))
                     }
                 )
             }
@@ -129,21 +137,23 @@ fun PostDetailsScreen(
                 }
 
                 // Write Comment
-                Surface(
-                    color = Color.White,
-                    shadowElevation = MARGIN_SMALL,
-                    modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter).height(WRITE_COMMENT_SECTION_HEIGHT)
-                ) {
-                    WriteComment(
-                        comment = state.currentComment,
-                        onCommentChanged = {
-                            onAction(PostDetailsAction.OnCommentChanged(it))
-                        },
-                        onCommentConfirmed = {
-                            onAction(PostDetailsAction.OnTapPostComment())
-                        }
-                    )
-                }
+                if (state.loggedInUser != null)
+                    Surface(
+                        color = Color.White,
+                        shadowElevation = MARGIN_SMALL,
+                        modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter).height(WRITE_COMMENT_SECTION_HEIGHT)
+                    ) {
+                        WriteComment(
+                            loggedInUser = state.loggedInUser,
+                            comment = state.currentComment,
+                            onCommentChanged = {
+                                onAction(PostDetailsAction.OnCommentChanged(it))
+                            },
+                            onCommentConfirmed = {
+                                onAction(PostDetailsAction.OnTapPostComment())
+                            }
+                        )
+                    }
             }
         }
 }

@@ -32,7 +32,7 @@ object DateUtils {
         val instant = try {
             Instant.parse(iso8601Timestamp)
         } catch (_: IllegalArgumentException) {
-            return "Invalid Date"
+            return ""
         }
 
         val dateTime = instant.toLocalDateTime(TimeZone.UTC)
@@ -41,6 +41,17 @@ object DateUtils {
         val day = dateTime.dayOfMonth
 
         return "${month.shortName()} $day"
+    }
+
+    fun getYear(iso8601Timestamp: String): String {
+        val instant = try {
+            Instant.parse(iso8601Timestamp)
+        } catch (_: IllegalArgumentException) {
+            return ""
+        }
+
+        val dateTime = instant.toLocalDateTime(TimeZone.UTC)
+        return dateTime.year.toString()
     }
 
     fun Month.shortName(): String {

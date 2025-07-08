@@ -3,6 +3,8 @@ package com.zg.sanctuary.auth.data.network.api_services.impls
 import com.zg.sanctuary.auth.data.network.api_services.AuthApiService
 import com.zg.sanctuary.auth.data.network.requests.EmailAndPasswordRequest
 import com.zg.sanctuary.auth.domain.User
+import com.zg.sanctuary.profile.domain.UserProfileDetails
+import com.zg.sanctuary.core.data.network.ENDPOINT_GET_USER_PROFILE
 import com.zg.sanctuary.core.data.network.ENDPOINT_LOGIN
 import com.zg.sanctuary.core.data.network.ENDPOINT_REGISTER
 import com.zg.sanctuary.core.data.network.ENDPOINT_UPDATE_USER
@@ -14,6 +16,7 @@ import com.zg.sanctuary.core.utils.ImageFormatDetector
 import com.zg.sanctuary.interests.domain.Interest
 import io.ktor.client.request.forms.formData
 import io.ktor.client.request.forms.submitFormWithBinaryData
+import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody

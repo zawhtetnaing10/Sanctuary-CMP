@@ -4,6 +4,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 // Margins
+val MARGIN_XSMALL = 2.dp
 val MARGIN_SMALL = 4.dp
 val MARGIN_MEDIUM = 8.dp
 val MARGIN_CARD_MEDIUM_2 = 12.dp

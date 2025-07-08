@@ -23,6 +23,7 @@ import com.zg.sanctuary.auth.presentation.personal_information.PersonalInformati
 import com.zg.sanctuary.auth.presentation.personal_information.PersonalInformationViewModel
 import com.zg.sanctuary.core.BeVietnamProTypography
 import com.zg.sanctuary.home.presentation.HomeRoute
+import com.zg.sanctuary.home.presentation.HomeViewModel
 import com.zg.sanctuary.posts.presentation.create_post.CreatePostRoute
 import com.zg.sanctuary.posts.presentation.create_post.CreatePostViewModel
 import com.zg.sanctuary.posts.presentation.post_details.PostDetailsRoute
@@ -45,9 +46,7 @@ fun App() {
     LaunchedEffect(Unit) {
         // Show splash screen for 3 seconds.
         delay(timeMillis = 2000)
-        //startDestination = if (authRepo.isUserLoggedIn()) AppRoute.Home else AppRoute.AuthGraph
-        // TODO: - Change back after testing
-        startDestination = AppRoute.ProfileDetails(0)
+        startDestination = if (authRepo.isUserLoggedIn()) AppRoute.Home else AppRoute.AuthGraph
     }
 
     MaterialTheme(
@@ -123,13 +122,21 @@ fun App() {
                 popEnterTransition = { popEnterTransition },
                 popExitTransition = { popExitTransition }
             ) {
-                HomeRoute(onNavigateToPostDetails = { postId ->
-                    navController.navigate(AppRoute.PostDetails(postId))
-                }, onNavigateToCreatePost = {
-                    navController.navigate(AppRoute.CreatePost)
-                }, onNavigateToProfile = { userId ->
-                    navController.navigate(AppRoute.ProfileDetails(userId))
-                })
+
+                val homeViewModel = koinViewModel<HomeViewModel>()
+
+                HomeRoute(
+                    viewModel = homeViewModel,
+                    onNavigateToPostDetails = { postId ->
+                        navController.navigate(AppRoute.PostDetails(postId))
+                    },
+                    onNavigateToCreatePost = {
+                        navController.navigate(AppRoute.CreatePost)
+                    },
+                    onNavigateToProfile = { userId ->
+                        navController.navigate(AppRoute.ProfileDetails(userId))
+                    },
+                )
             }
 
             // Post Details
@@ -149,6 +156,9 @@ fun App() {
                     viewModel = postDetailsViewModel,
                     onNavigateBack = {
                         navController.navigateUp()
+                    },
+                    onNavigateToProfile = { userId ->
+                        navController.navigate(AppRoute.ProfileDetails(userId))
                     }
                 )
             }

@@ -2,6 +2,7 @@ package com.zg.sanctuary.auth.domain
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.zg.sanctuary.core.utils.DateUtils
 import com.zg.sanctuary.interests.domain.Interest
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -32,4 +33,8 @@ data class User(
     val interests: List<Interest>?
 ) {
     fun getBearerToken(): String = "Bearer $accessToken"
+
+    fun getJoinedDate(): String {
+        return DateUtils.getYear(createdAt)
+    }
 }

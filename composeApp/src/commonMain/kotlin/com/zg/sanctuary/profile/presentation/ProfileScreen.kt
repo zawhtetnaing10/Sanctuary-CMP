@@ -22,7 +22,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import com.zg.sanctuary.auth.domain.User
-import com.zg.sanctuary.auth.presentation.personal_information.PersonalInformationActions
 import com.zg.sanctuary.core.DIVIDER_COLOR
 import com.zg.sanctuary.core.HINT_COLOR
 import com.zg.sanctuary.core.MARGIN_56
@@ -41,7 +40,6 @@ import com.zg.sanctuary.core.presentation.components.SanctuaryPrimaryButton
 import com.zg.sanctuary.interests.domain.Interest
 import com.zg.sanctuary.posts.domain.Post
 import com.zg.sanctuary.posts.presentation.components.PostListItem
-import com.zg.sanctuary.posts.presentation.post_list.PostListAction
 import com.zg.sanctuary.profile.presentation.components.ProfileAppbar
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource

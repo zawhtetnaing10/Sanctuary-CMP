@@ -30,8 +30,25 @@ class PostRepository(
         }
     }
 
-    suspend fun getMorePosts(page: Int, onSuccess: (MetaResponse?) -> Unit, onFailure: (String) -> Unit){
-        if (page == 0){
+    suspend fun getPostsForUser(userId: Int, onSuccess: (List<Post>) -> Unit, onFailure: (String) -> Unit) {
+        val loggedInUser = database.userDao().getLoggedInUser()
+
+        loggedInUser?.let {
+            val accessToken = it.getBearerToken()
+
+            postApiService.getPostsForUser(userId, accessToken)
+                .onSuccess {
+                    onSuccess(it)
+                }.onError {
+                    onFailure(it.error)
+                }
+        } ?: run {
+            onFailure("User is not logged in.")
+        }
+    }
+
+    suspend fun getMorePosts(page: Int, onSuccess: (MetaResponse?) -> Unit, onFailure: (String) -> Unit) {
+        if (page == 0) {
             onSuccess(null)
             return
         }

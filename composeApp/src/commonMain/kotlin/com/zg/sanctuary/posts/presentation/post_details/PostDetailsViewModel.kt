@@ -2,6 +2,7 @@ package com.zg.sanctuary.posts.presentation.post_details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.zg.sanctuary.auth.data.repositories.AuthRepository
 import com.zg.sanctuary.posts.data.repositories.PostRepository
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,6 +15,7 @@ import kotlinx.coroutines.launch
 
 class PostDetailsViewModel(
     val postRepository: PostRepository,
+    val authRepository: AuthRepository,
     val postId: Int
 ) : ViewModel() {
 
@@ -31,6 +33,12 @@ class PostDetailsViewModel(
                     _state.update { it.copy(error = errMsg) }
                 }
             )
+
+            // Get Logged In User
+            val loggedInUser = authRepository.getLoggedInUser()
+            _state.update {
+                it.copy(loggedInUser = loggedInUser)
+            }
 
             // Get post comments
             getCommentsForPost()
@@ -99,6 +107,12 @@ class PostDetailsViewModel(
                             _state.update { it.copy(error = errMsg) }
                         })
                     }
+                }
+            }
+
+            is PostDetailsAction.OnTapUserProfile -> {
+                viewModelScope.launch {
+                    _events.send(PostDetailsEvent.NavigateToUserProfile(action.userId))
                 }
             }
         }

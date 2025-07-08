@@ -2,6 +2,7 @@ package com.zg.sanctuary.auth.data.repositories
 
 import com.zg.sanctuary.auth.data.network.api_services.AuthApiService
 import com.zg.sanctuary.auth.domain.User
+import com.zg.sanctuary.profile.domain.UserProfileDetails
 import com.zg.sanctuary.core.data.network.onError
 import com.zg.sanctuary.core.data.network.onSuccess
 import com.zg.sanctuary.core.persistence.SanctuaryDatabase
@@ -79,4 +80,5 @@ class AuthRepository(
         val loggedInUser = database.userDao().getLoggedInUser()
         return loggedInUser != null
     }
+
 }

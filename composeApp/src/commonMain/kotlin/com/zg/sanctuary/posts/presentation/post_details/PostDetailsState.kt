@@ -1,5 +1,6 @@
 package com.zg.sanctuary.posts.presentation.post_details
 
+import com.zg.sanctuary.auth.domain.User
 import com.zg.sanctuary.comments.domain.Comment
 import com.zg.sanctuary.posts.domain.Post
 
@@ -8,5 +9,6 @@ data class PostDetailsState(
     val error: String = "",
     val post: Post? = null,
     val comments: List<Comment>? = null,
+    val loggedInUser : User? = null,
     val currentComment : String = ""
 )

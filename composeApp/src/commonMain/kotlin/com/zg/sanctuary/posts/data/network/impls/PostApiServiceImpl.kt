@@ -3,6 +3,7 @@ package com.zg.sanctuary.posts.data.network.impls
 import com.zg.sanctuary.comments.domain.Comment
 import com.zg.sanctuary.core.data.network.ENDPOINT_COMMENTS
 import com.zg.sanctuary.core.data.network.ENDPOINT_POSTS
+import com.zg.sanctuary.core.data.network.ENDPOINT_POSTS_BY_USER
 import com.zg.sanctuary.core.data.network.ENDPOINT_POST_LIKE
 import com.zg.sanctuary.core.data.network.HttpClientProvider
 import com.zg.sanctuary.core.data.network.SanctuaryResult
@@ -29,6 +30,17 @@ class PostApiServiceImpl : PostApiService {
     override suspend fun getPosts(accessToken: String): SanctuaryResult<MetaResponse, SanctuaryError> {
         return safeCall<MetaResponse> {
             HttpClientProvider.httpClient.get(ENDPOINT_POSTS) {
+                header(HttpHeaders.Authorization, accessToken)
+            }
+        }
+    }
+
+    override suspend fun getPostsForUser(
+        userId: Int,
+        accessToken: String
+    ): SanctuaryResult<List<Post>, SanctuaryError> {
+        return safeCall<List<Post>> {
+            HttpClientProvider.httpClient.get("$ENDPOINT_POSTS_BY_USER?user_id=$userId") {
                 header(HttpHeaders.Authorization, accessToken)
             }
         }
