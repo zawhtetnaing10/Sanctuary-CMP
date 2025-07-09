@@ -234,42 +234,47 @@ fun ProfileScreen(
                 Spacer(Modifier.height(MARGIN_XLARGE))
             }
 
-            // Posts Title
-            item {
-                Text(
-                    stringResource(Res.string.posts),
-                    fontSize = TEXT_REGULAR_4X,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(horizontal = MARGIN_MEDIUM_2)
-                )
-            }
-
-            item {
-                Spacer(Modifier.height(MARGIN_MEDIUM_2))
-            }
-
             // Posts by user.
-            items(state.postsByUser.count()) { index ->
-                val post = state.postsByUser[index]
-                PostListItem(
-                    post = post,
-                    onLikeClicked = {
-                        onAction(ProfileActions.OnTapLike(post.id))
-                    }, onCommentClicked = {
-                        onAction(ProfileActions.OnTapComment(post.id))
-                    }, onShareClicked = {
-                        // Do Nothing
-                    }, onPostClicked = {
-                        onAction(ProfileActions.OnTapPost(post.id))
-                    }, onUserClicked = {
-                        // Do Nothing
-                    })
+            if(state.postsByUser.isNotEmpty()){
 
-                // Divider
-                if (index < state.postsByUser.count() - 1) {
-                    HorizontalDivider(color = DIVIDER_COLOR, modifier = Modifier.height(MARGIN_SMALL))
+                // Posts Title
+                item {
+                    Text(
+                        stringResource(Res.string.posts),
+                        fontSize = TEXT_REGULAR_4X,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(horizontal = MARGIN_MEDIUM_2)
+                    )
+                }
+
+                item {
+                    Spacer(Modifier.height(MARGIN_MEDIUM_2))
+                }
+
+                // Posts by user.
+                items(state.postsByUser.count()) { index ->
+                    val post = state.postsByUser[index]
+                    PostListItem(
+                        post = post,
+                        onLikeClicked = {
+                            onAction(ProfileActions.OnTapLike(post.id))
+                        }, onCommentClicked = {
+                            onAction(ProfileActions.OnTapComment(post.id))
+                        }, onShareClicked = {
+                            // Do Nothing
+                        }, onPostClicked = {
+                            onAction(ProfileActions.OnTapPost(post.id))
+                        }, onUserClicked = {
+                            // Do Nothing
+                        })
+
+                    // Divider
+                    if (index < state.postsByUser.count() - 1) {
+                        HorizontalDivider(color = DIVIDER_COLOR, modifier = Modifier.height(MARGIN_SMALL))
+                    }
                 }
             }
+
 
 
             // Bottom Margin

@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zg.sanctuary.auth.data.repositories.AuthRepository
 import com.zg.sanctuary.friends.data.repositories.FriendsRepository
+import com.zg.sanctuary.friends.domain.FRIEND_REQUEST_ACCEPTED
+import com.zg.sanctuary.friends.domain.FRIEND_REQUEST_PENDING
 import com.zg.sanctuary.posts.data.repositories.PostRepository
 import com.zg.sanctuary.posts.domain.Post
 import com.zg.sanctuary.profile.data.repository.ProfileRepository
@@ -78,15 +80,15 @@ class ProfileViewModel(
                         if (friendStatusList.isNotEmpty()) {
                             val friendStatus = friendStatusList.first()
 
-                            if (friendStatus.senderId == loggedInUser.id && friendStatus.requestStatus == "pending") {
+                            if (friendStatus.senderId == loggedInUser.id && friendStatus.requestStatus == FRIEND_REQUEST_PENDING) {
                                 // Logged in user sent the friend request. It is pending.
                                 _state.update { it.copy(userStatus = UserStatus.FRIEND_REQUEST_PENDING) }
                                 return@launch
-                            } else if (friendStatus.receiverId == loggedInUser.id && friendStatus.requestStatus == "pending") {
+                            } else if (friendStatus.receiverId == loggedInUser.id && friendStatus.requestStatus == FRIEND_REQUEST_PENDING) {
                                 // Logged in user received the friend request
                                 _state.update { it.copy(userStatus = UserStatus.RECEIVED_FRIEND_REQUEST) }
                                 return@launch
-                            } else if (friendStatus.requestStatus == "accepted") {
+                            } else if (friendStatus.requestStatus == FRIEND_REQUEST_ACCEPTED) {
                                 // Already friends
                                 _state.update { it.copy(userStatus = UserStatus.FRIENDS) }
                                 return@launch

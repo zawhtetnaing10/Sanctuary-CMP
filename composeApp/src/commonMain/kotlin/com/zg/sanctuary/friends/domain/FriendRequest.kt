@@ -25,3 +25,6 @@ data class FriendRequest(
     @SerialName("user")
     val user: User? = null
 )
+
+const val FRIEND_REQUEST_ACCEPTED = "accepted"
+const val FRIEND_REQUEST_PENDING = "pending"

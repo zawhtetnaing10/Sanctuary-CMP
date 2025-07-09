@@ -13,6 +13,7 @@ import com.zg.sanctuary.friends.data.network.FriendsApiService
 import com.zg.sanctuary.friends.data.network.impls.FriendsApiServiceImpl
 import com.zg.sanctuary.friends.data.repositories.FriendsRepository
 import com.zg.sanctuary.friends.domain.FriendRequest
+import com.zg.sanctuary.friends.presentation.FriendsViewModel
 import com.zg.sanctuary.home.presentation.HomeViewModel
 import com.zg.sanctuary.interests.data.network.api_services.InterestsApiService
 import com.zg.sanctuary.interests.data.network.api_services.impls.InterestApiServiceImpl
@@ -97,4 +98,5 @@ val sharedModule = module {
             profileRepository = get()
         )
     }
+    viewModelOf(::FriendsViewModel)
 }

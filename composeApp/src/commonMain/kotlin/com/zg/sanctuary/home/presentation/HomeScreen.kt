@@ -1,6 +1,5 @@
 package com.zg.sanctuary.home.presentation
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -36,6 +35,7 @@ import com.zg.sanctuary.core.MARGIN_LARGE
 import com.zg.sanctuary.core.MARGIN_XSMALL
 import com.zg.sanctuary.core.PRIMARY_COLOR
 import com.zg.sanctuary.friends.presentation.FriendsRoute
+import com.zg.sanctuary.friends.presentation.FriendsViewModel
 import com.zg.sanctuary.posts.presentation.post_list.PostListRoute
 import com.zg.sanctuary.posts.presentation.post_list.PostListViewModel
 import org.jetbrains.compose.resources.painterResource
@@ -120,7 +120,13 @@ fun HomeScreen(
                 startDestination = AppRoute.Friends
             ) {
                 composable<AppRoute.Friends> {
-                    FriendsRoute()
+                    val friendsViewModel = koinViewModel<FriendsViewModel>()
+                    FriendsRoute(
+                        viewModel = friendsViewModel,
+                        onNavigateToProfile = { userId ->
+                            onNavigateToProfile(userId)
+                        }
+                    )
                 }
             }
         }
