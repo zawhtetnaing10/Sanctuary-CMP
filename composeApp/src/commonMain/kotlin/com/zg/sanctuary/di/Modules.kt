@@ -26,6 +26,7 @@ import com.zg.sanctuary.posts.presentation.post_list.PostListViewModel
 import com.zg.sanctuary.profile.data.network.api_services.ProfileApiService
 import com.zg.sanctuary.profile.data.network.api_services.impls.ProfileApiServiceImpl
 import com.zg.sanctuary.profile.data.repository.ProfileRepository
+import com.zg.sanctuary.profile.presentation.ProfileViewModel
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
@@ -77,10 +78,8 @@ val sharedModule = module {
     viewModelOf(::LoginViewModel)
     viewModelOf(::CreateAccountViewModel)
     viewModelOf(::PersonalInformationViewModel)
-
     viewModelOf(::HomeViewModel)
     viewModelOf(::PostListViewModel)
-
     viewModel { params ->
         PostDetailsViewModel(
             postId = params.get(),
@@ -88,6 +87,14 @@ val sharedModule = module {
             authRepository = get()
         )
     }
-
     viewModelOf(::CreatePostViewModel)
+    viewModel { params ->
+        ProfileViewModel(
+            userId = params.get(),
+            authRepository = get(),
+            postRepository = get(),
+            friendsRepository = get(),
+            profileRepository = get()
+        )
+    }
 }

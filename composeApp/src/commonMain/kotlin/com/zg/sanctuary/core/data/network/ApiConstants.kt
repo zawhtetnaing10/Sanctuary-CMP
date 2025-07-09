@@ -5,7 +5,7 @@ const val ENDPOINT_LOGIN = "/api/login"
 const val ENDPOINT_REGISTER = "/api/register"
 const val ENDPOINT_UPDATE_USER = "/api/updateUser"
 
-const val ENDPOINT_GET_USER_PROFILE = "/api/user"
+const val ENDPOINT_GET_USER_PROFILE = "/api/users"
 
 const val ENDPOINT_POSTS = "/api/posts"
 const val ENDPOINT_POSTS_BY_USER = "/api/posts_by_user"

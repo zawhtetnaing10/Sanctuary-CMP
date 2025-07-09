@@ -27,6 +27,15 @@ class AuthRepository(
         }
     }
 
+    suspend fun logout(onSuccess: () -> Unit, onFailure: (String) -> Unit) {
+        try {
+            database.userDao().deleteAllUsers()
+            onSuccess()
+        } catch (e: Exception) {
+            onFailure(e.message ?: "")
+        }
+    }
+
     suspend fun createAccount(email: String, password: String, onSuccess: (User) -> Unit, onFailure: (String) -> Unit) {
         authApiService.createAccount(
             email = email,

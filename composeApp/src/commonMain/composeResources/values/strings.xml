@@ -30,6 +30,7 @@
     <string name="friend_requests">Friend Requests</string>
     <string name="friends">My Friends</string>
     <string name="profile">Profile</string>
+    <string name="send_friend_request">Send Friend Request</string>
     <string name="profile_friends">Friends</string>
     <string name="friend_request_pending">Request Pending</string>
     <string name="sent_you_a_friend_request">Sent you a friend request. Accept?</string>

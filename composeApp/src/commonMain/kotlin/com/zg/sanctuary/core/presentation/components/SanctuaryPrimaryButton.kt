@@ -9,6 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import com.zg.sanctuary.core.DISABLED_BUTTON_COLOR
+import com.zg.sanctuary.core.HINT_COLOR
 import com.zg.sanctuary.core.MARGIN_LARGE
 import com.zg.sanctuary.core.MARGIN_XXLARGE
 import com.zg.sanctuary.core.PRIMARY_COLOR
@@ -18,13 +20,16 @@ import com.zg.sanctuary.core.TEXT_REGULAR_2X
 fun SanctuaryPrimaryButton(
     title: String,
     onClick: () -> Unit,
+    enabled : Boolean = true,
     modifier: Modifier = Modifier
 ) {
     Button(
         onClick = onClick,
+        enabled = enabled,
         shape = RoundedCornerShape(MARGIN_LARGE),
         colors = ButtonDefaults.buttonColors(
-            containerColor = PRIMARY_COLOR
+            containerColor = PRIMARY_COLOR,
+            disabledContainerColor = DISABLED_BUTTON_COLOR
         ),
         modifier = modifier.height(MARGIN_XXLARGE)
     ) {

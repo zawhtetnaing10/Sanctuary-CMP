@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -29,6 +30,7 @@ import com.zg.sanctuary.posts.presentation.create_post.CreatePostViewModel
 import com.zg.sanctuary.posts.presentation.post_details.PostDetailsRoute
 import com.zg.sanctuary.posts.presentation.post_details.PostDetailsViewModel
 import com.zg.sanctuary.profile.presentation.ProfileRoute
+import com.zg.sanctuary.profile.presentation.ProfileViewModel
 import com.zg.sanctuary.splash.presentation.SplashScreen
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -189,7 +191,24 @@ fun App() {
                 val args = backStackEntry.toRoute<AppRoute.ProfileDetails>()
                 val userId = args.userId
 
-                ProfileRoute()
+                val profileViewModel = koinViewModel<ProfileViewModel>(parameters = { parametersOf(userId) })
+
+                ProfileRoute(
+                    viewModel = profileViewModel,
+                    onNavigateBack = { navController.navigateUp() },
+                    onNavigateToPostDetails = { postId ->
+                        navController.navigate(AppRoute.PostDetails(postId))
+                    },
+                    onNavigateBackToLogin = {
+                        // Drop everything and navigate back to login
+                        navController.navigate(AppRoute.AuthGraph) {
+                            popUpTo(navController.graph.findStartDestination().route ?: "") {
+                                inclusive = true
+                            }
+                            launchSingleTop = true
+                        }
+                    }
+                )
             }
         }
     }
