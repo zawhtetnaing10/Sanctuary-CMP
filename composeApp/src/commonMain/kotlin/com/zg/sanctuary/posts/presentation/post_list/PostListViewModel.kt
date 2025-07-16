@@ -122,8 +122,10 @@ class PostListViewModel(
                 }
             }
 
-            is PostListAction.OnTapSearch -> {
-                // TODO: - Handle Search after search feature has been added
+            is PostListAction.OnTapChat -> {
+                viewModelScope.launch {
+                    _events.send(NavigateToChat)
+                }
             }
 
             is PostListAction.OnTapShare -> {

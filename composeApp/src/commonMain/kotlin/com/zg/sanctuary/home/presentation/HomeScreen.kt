@@ -56,6 +56,7 @@ fun HomeRoute(
     onNavigateToPostDetails: (Int) -> Unit,
     onNavigateToCreatePost: () -> Unit,
     onNavigateToProfile: (Int) -> Unit,
+    onNavigateToChat: () -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -63,7 +64,8 @@ fun HomeRoute(
         state = state,
         onNavigateToPostDetails = onNavigateToPostDetails,
         onNavigateToCreatePost = onNavigateToCreatePost,
-        onNavigateToProfile = onNavigateToProfile
+        onNavigateToProfile = onNavigateToProfile,
+        onNavigateToChat = onNavigateToChat
     )
 }
 
@@ -73,6 +75,7 @@ fun HomeScreen(
     onNavigateToPostDetails: (Int) -> Unit,
     onNavigateToCreatePost: () -> Unit,
     onNavigateToProfile: (Int) -> Unit,
+    onNavigateToChat : () -> Unit
 ) {
 
     val homeNavController = rememberNavController()
@@ -110,6 +113,9 @@ fun HomeScreen(
                         },
                         onNavigateToProfile = { userId ->
                             onNavigateToProfile(userId)
+                        },
+                        onNavigateToChat = {
+                            onNavigateToChat()
                         }
                     )
                 }

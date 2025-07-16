@@ -36,7 +36,8 @@ fun PostListRoute(
     viewModel: PostListViewModel,
     onNavigateToCreatePost: () -> Unit,
     onNavigateToPostDetails: (Int) -> Unit,
-    onNavigateToProfile: (Int) -> Unit
+    onNavigateToProfile: (Int) -> Unit,
+    onNavigateToChat : () -> Unit
 ) {
 
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -86,6 +87,10 @@ fun PostListRoute(
                 is PostListEvent.NavigateToUserProfile -> {
                     onNavigateToProfile(it.userId)
                 }
+
+                is PostListEvent.NavigateToChat -> {
+                    onNavigateToChat()
+                }
             }
         }
     }
@@ -120,8 +125,8 @@ fun PostListScreen(state: PostListState, lazyListState: LazyListState, onAction:
             // Appbar
             item {
                 PostListAppBar(
-                    onTapSearch = {
-                        onAction(PostListAction.OnTapSearch())
+                    onTapChat = {
+                        onAction(PostListAction.OnTapChat())
                     }
                 )
             }

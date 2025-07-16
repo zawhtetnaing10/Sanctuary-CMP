@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -22,6 +23,8 @@ import com.zg.sanctuary.auth.presentation.login.LoginRoute
 import com.zg.sanctuary.auth.presentation.login.LoginViewModel
 import com.zg.sanctuary.auth.presentation.personal_information.PersonalInformationRoute
 import com.zg.sanctuary.auth.presentation.personal_information.PersonalInformationViewModel
+import com.zg.sanctuary.chat.presentation.ChatRoute
+import com.zg.sanctuary.chat.presentation.ChatViewModel
 import com.zg.sanctuary.core.BeVietnamProTypography
 import com.zg.sanctuary.home.presentation.HomeRoute
 import com.zg.sanctuary.home.presentation.HomeViewModel
@@ -138,6 +141,30 @@ fun App() {
                     onNavigateToProfile = { userId ->
                         navController.navigate(AppRoute.ProfileDetails(userId))
                     },
+                    onNavigateToChat = {
+                        // TODO: - Change to chat history screen later
+                        navController.navigate(AppRoute.Chat(0))
+                    }
+                )
+            }
+
+            composable<AppRoute.Chat>(
+                enterTransition = { enterTransition },
+                popEnterTransition = { popEnterTransition },
+                popExitTransition = { popExitTransition }
+            ) { backStackEntry ->
+
+                val args = backStackEntry.toRoute<AppRoute.Chat>()
+                val recipientId = args.recipientId
+
+                // View Model
+                val chatViewModel = koinViewModel<ChatViewModel>(parameters = { parametersOf(recipientId) })
+
+                ChatRoute(
+                    viewModel = chatViewModel,
+                    onNavigateBack = {
+                        navController.navigateUp()
+                    }
                 )
             }
 

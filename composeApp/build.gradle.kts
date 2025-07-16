@@ -37,6 +37,7 @@ kotlin {
 
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
+
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -68,9 +69,7 @@ kotlin {
             implementation(libs.koin.compose.viewmodel)
             api(libs.koin.core)
 
-            // Coil
-            implementation(libs.coil.compose)
-            implementation(libs.coil.network.okhttp)
+            implementation(libs.bundles.coil)
         }
 
         nativeMain.dependencies {

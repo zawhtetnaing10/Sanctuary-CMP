@@ -1,7 +1,7 @@
 package com.zg.sanctuary.posts.presentation.post_list
 
 sealed interface PostListAction {
-    class OnTapSearch() : PostListAction
+    class OnTapChat() : PostListAction
     class OnTapCreatePost() : PostListAction
     data class OnTapPost(val id: Int) : PostListAction
     data class OnTapLike(val id: Int) : PostListAction

@@ -7,6 +7,9 @@ import com.zg.sanctuary.auth.data.repositories.AuthRepository
 import com.zg.sanctuary.auth.presentation.create_account.CreateAccountViewModel
 import com.zg.sanctuary.auth.presentation.login.LoginViewModel
 import com.zg.sanctuary.auth.presentation.personal_information.PersonalInformationViewModel
+import com.zg.sanctuary.chat.data.network.WebsocketService
+import com.zg.sanctuary.chat.data.repositories.ChatRepository
+import com.zg.sanctuary.chat.presentation.ChatViewModel
 import com.zg.sanctuary.core.persistence.DatabaseFactory
 import com.zg.sanctuary.core.persistence.SanctuaryDatabase
 import com.zg.sanctuary.friends.data.network.FriendsApiService
@@ -28,6 +31,10 @@ import com.zg.sanctuary.profile.data.network.api_services.ProfileApiService
 import com.zg.sanctuary.profile.data.network.api_services.impls.ProfileApiServiceImpl
 import com.zg.sanctuary.profile.data.repository.ProfileRepository
 import com.zg.sanctuary.profile.presentation.ProfileViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.SupervisorJob
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
@@ -36,6 +43,11 @@ import org.koin.dsl.module
 expect val platformModule: Module
 
 val sharedModule = module {
+
+    // Application level coroutine scope.
+    single<CoroutineScope> {
+        CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    }
 
     // Database
     single<SanctuaryDatabase> {
@@ -75,6 +87,16 @@ val sharedModule = module {
         FriendsRepository(apiService = get(), database = get())
     }
 
+    // Chat
+    single<WebsocketService> { WebsocketService() }
+    single<ChatRepository> {
+        ChatRepository(
+            websocketService = get(),
+            applicationScope = get(),
+            database = get()
+        )
+    }
+
     // View Models
     viewModelOf(::LoginViewModel)
     viewModelOf(::CreateAccountViewModel)
@@ -99,4 +121,12 @@ val sharedModule = module {
         )
     }
     viewModelOf(::FriendsViewModel)
+
+    viewModel { params ->
+        ChatViewModel(
+            receiverId = params.get(),
+            authRepository = get(),
+            chatRepository = get()
+        )
+    }
 }

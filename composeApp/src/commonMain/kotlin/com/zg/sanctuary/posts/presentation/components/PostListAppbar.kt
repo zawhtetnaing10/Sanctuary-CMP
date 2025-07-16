@@ -4,8 +4,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -18,14 +16,16 @@ import androidx.compose.ui.text.font.FontWeight
 import com.zg.sanctuary.core.MARGIN_MEDIUM
 import com.zg.sanctuary.core.MARGIN_XLARGE
 import com.zg.sanctuary.core.TEXT_REGULAR_4X
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import sanctuary.composeapp.generated.resources.Res
 import sanctuary.composeapp.generated.resources.app_name
+import sanctuary.composeapp.generated.resources.sanctuary_chat
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PostListAppBar(
-    onTapSearch: () -> Unit
+    onTapChat: () -> Unit
 ) {
     TopAppBar(
         title = {
@@ -42,10 +42,10 @@ fun PostListAppBar(
         ),
         actions = {
             Icon(
-                Icons.Default.Search,
+                painterResource(Res.drawable.sanctuary_chat),
                 contentDescription = null,
                 modifier = Modifier.size(MARGIN_XLARGE).padding(end = MARGIN_MEDIUM).clickable {
-                    onTapSearch()
+                    onTapChat()
                 })
         }
     )

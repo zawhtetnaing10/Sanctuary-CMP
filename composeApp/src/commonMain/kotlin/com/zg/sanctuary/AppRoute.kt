@@ -47,4 +47,8 @@ sealed interface AppRoute {
 
     @Serializable
     data class ProfileDetails(val userId: Int) : AppRoute
+
+    // Chat
+    @Serializable
+    data class Chat(val recipientId: Int) : AppRoute
 }

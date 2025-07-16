@@ -4,6 +4,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.websocket.WebSockets
 import io.ktor.client.request.header
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
@@ -26,11 +27,14 @@ object HttpClientProvider {
             // Default Options
             install(DefaultRequest){
                 // TODO: - Get from build config later
-                url("http://10.0.2.2:8080")
+                url(BASE_URL)
 
                 header("Accept", "application/json")
                 header("Content-Type", "application/json")
             }
+
+            // Web socket
+            install(WebSockets)
 
             // Set Timeouts
             install(HttpTimeout){
