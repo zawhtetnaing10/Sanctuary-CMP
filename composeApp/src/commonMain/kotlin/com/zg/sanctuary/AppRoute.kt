@@ -50,5 +50,8 @@ sealed interface AppRoute {
 
     // Chat
     @Serializable
+    data object Conversation : AppRoute
+
+    @Serializable
     data class Chat(val recipientId: Int) : AppRoute
 }

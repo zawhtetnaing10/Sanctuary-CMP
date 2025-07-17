@@ -37,4 +37,5 @@
     <string name="log_out">Log out</string>
     <string name="posts">Posts</string>
     <string name="friends_empty">There are no friend requests or friends to display yet. You can send friend requests by visiting other users' profiles.</string>
+    <string name="chat">Chat</string>
 </resources>

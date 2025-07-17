@@ -25,6 +25,7 @@ import com.zg.sanctuary.auth.presentation.personal_information.PersonalInformati
 import com.zg.sanctuary.auth.presentation.personal_information.PersonalInformationViewModel
 import com.zg.sanctuary.chat.presentation.ChatRoute
 import com.zg.sanctuary.chat.presentation.ChatViewModel
+import com.zg.sanctuary.conversations.presentation.ConversationsRoute
 import com.zg.sanctuary.core.BeVietnamProTypography
 import com.zg.sanctuary.home.presentation.HomeRoute
 import com.zg.sanctuary.home.presentation.HomeViewModel
@@ -142,12 +143,26 @@ fun App() {
                         navController.navigate(AppRoute.ProfileDetails(userId))
                     },
                     onNavigateToChat = {
-                        // TODO: - Change to chat history screen later
+                        // TODO: - Should navigate to conversation screen.
                         navController.navigate(AppRoute.Chat(0))
+                        //navController.navigate(AppRoute.Conversation)
                     }
                 )
             }
 
+            // Conversations
+            composable<AppRoute.Conversation>(
+                enterTransition = { enterTransition },
+                popEnterTransition = { popEnterTransition },
+                popExitTransition = { popExitTransition }
+            ) {
+
+                // TODO: - Set up View Model Here
+
+                ConversationsRoute()
+            }
+
+            // Chat
             composable<AppRoute.Chat>(
                 enterTransition = { enterTransition },
                 popEnterTransition = { popEnterTransition },

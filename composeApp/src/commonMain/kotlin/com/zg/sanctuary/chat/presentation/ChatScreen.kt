@@ -2,6 +2,8 @@ package com.zg.sanctuary.chat.presentation
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -9,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -18,7 +19,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import com.zg.sanctuary.chat.presentation.components.ChatAppbar
+import com.zg.sanctuary.chat.presentation.components.ChatItem
 import com.zg.sanctuary.chat.presentation.components.WriteMessage
+import com.zg.sanctuary.core.BOTTOM_SPACING
+import com.zg.sanctuary.core.BOTTOM_SPACING_CHAT
+import com.zg.sanctuary.core.MARGIN_MEDIUM_2
 import com.zg.sanctuary.core.MARGIN_SMALL
 import com.zg.sanctuary.core.WRITE_COMMENT_SECTION_HEIGHT
 import kotlinx.coroutines.flow.collectLatest
@@ -60,14 +66,31 @@ fun ChatScreen(
     onAction: (ChatActions) -> Unit
 ) {
     Scaffold(
-        containerColor = Color.White
+        containerColor = Color.White,
+        topBar = {
+            ChatAppbar(
+                onTapBack = {}
+            )
+        }
     ) { innerPadding ->
         Box(modifier = Modifier.fillMaxSize()) {
 
             // TODO: - Replace with actual chat message
-            LazyColumn(modifier = Modifier.padding(innerPadding)) {
-                items(state.chatMessages.count()) {
-                    Text(state.chatMessages[it])
+            LazyColumn(
+                modifier = Modifier.padding(innerPadding),
+                contentPadding = PaddingValues(horizontal = MARGIN_MEDIUM_2)
+            ) {
+                // TODO: - Replace with this after binding the api
+//                items(state.chatMessages.count()) {
+//                    Text(state.chatMessages[it])
+//                }
+
+                items(20){ index ->
+                    ChatItem(isSenderLoggedInUser = index % 2 == 0)
+                }
+
+                item{
+                    Spacer(modifier = Modifier.height(BOTTOM_SPACING_CHAT))
                 }
             }
 

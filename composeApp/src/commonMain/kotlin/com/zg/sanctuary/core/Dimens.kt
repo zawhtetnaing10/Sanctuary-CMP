@@ -15,6 +15,7 @@ val MARGIN_XLARGE = 32.dp
 val MARGIN_40 = 40.dp
 val MARGIN_XXLARGE = 48.dp
 val MARGIN_56 = 56.dp
+val MARGIN_64 = 64.dp
 
 // Fonts
 val TEXT_SMALL_2X = 10.sp
@@ -40,3 +41,5 @@ val WRITE_COMMENT_SECTION_HEIGHT = 92.dp
 val CREATE_POST_IMAGE_HEIGHT = 200.dp
 
 val BOTTOM_SPACING = 88.dp
+
+val BOTTOM_SPACING_CHAT = 100.dp
