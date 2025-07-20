@@ -19,6 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import coil3.compose.AsyncImage
+import com.zg.sanctuary.auth.domain.User
 import com.zg.sanctuary.core.MARGIN_56
 import com.zg.sanctuary.core.MARGIN_CARD_MEDIUM_2
 import com.zg.sanctuary.core.MARGIN_MEDIUM
@@ -28,12 +30,15 @@ import com.zg.sanctuary.core.TEXT_REGULAR_2XX
 import com.zg.sanctuary.core.TEXT_REGULAR_3X
 import org.jetbrains.compose.resources.painterResource
 import sanctuary.composeapp.generated.resources.Res
+import sanctuary.composeapp.generated.resources.image_loading_error
+import sanctuary.composeapp.generated.resources.loading_skeleton
 import sanctuary.composeapp.generated.resources.sample_profile_picture
 
 @Composable
 fun ChatAppbar(
-    modifier : Modifier = Modifier,
+    otherUser : User,
     onTapBack: () -> Unit,
+    modifier : Modifier = Modifier,
 ){
     Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier.height(MARGIN_56)) {
         Icon(
@@ -43,15 +48,17 @@ fun ChatAppbar(
 
         Spacer(modifier = Modifier.width(MARGIN_CARD_MEDIUM_2))
 
-        Image(
-            painterResource(Res.drawable.sample_profile_picture),
-            contentDescription = "User profile image",
+        AsyncImage(
+            model = otherUser.profileImageUrl,
+            placeholder = painterResource(Res.drawable.loading_skeleton),
+            error = painterResource(Res.drawable.image_loading_error),
+            contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .size(MARGIN_XLARGE)
                 .clip(CircleShape)
         )
 
-        Text("Sofia Carter", fontSize = TEXT_REGULAR_2XX, fontWeight = FontWeight.Medium, modifier = Modifier.padding(start = MARGIN_CARD_MEDIUM_2))
+        Text(otherUser.fullName, fontSize = TEXT_REGULAR_2XX, fontWeight = FontWeight.Medium, modifier = Modifier.padding(start = MARGIN_CARD_MEDIUM_2))
     }
 }

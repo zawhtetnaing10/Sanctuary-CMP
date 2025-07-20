@@ -7,7 +7,9 @@ import com.zg.sanctuary.auth.data.repositories.AuthRepository
 import com.zg.sanctuary.auth.presentation.create_account.CreateAccountViewModel
 import com.zg.sanctuary.auth.presentation.login.LoginViewModel
 import com.zg.sanctuary.auth.presentation.personal_information.PersonalInformationViewModel
+import com.zg.sanctuary.chat.data.network.ChatApiService
 import com.zg.sanctuary.chat.data.network.WebsocketService
+import com.zg.sanctuary.chat.data.network.impls.ChatApiServiceImpl
 import com.zg.sanctuary.chat.data.repositories.ChatRepository
 import com.zg.sanctuary.chat.presentation.ChatViewModel
 import com.zg.sanctuary.conversations.data.network.ConversationsApiService
@@ -19,7 +21,6 @@ import com.zg.sanctuary.core.persistence.SanctuaryDatabase
 import com.zg.sanctuary.friends.data.network.FriendsApiService
 import com.zg.sanctuary.friends.data.network.impls.FriendsApiServiceImpl
 import com.zg.sanctuary.friends.data.repositories.FriendsRepository
-import com.zg.sanctuary.friends.domain.FriendRequest
 import com.zg.sanctuary.friends.presentation.FriendsViewModel
 import com.zg.sanctuary.home.presentation.HomeViewModel
 import com.zg.sanctuary.interests.data.network.api_services.InterestsApiService
@@ -99,10 +100,12 @@ val sharedModule = module {
 
     // Chat
     single<WebsocketService> { WebsocketService() }
+    single<ChatApiService> { ChatApiServiceImpl() }
     single<ChatRepository> {
         ChatRepository(
             websocketService = get(),
             applicationScope = get(),
+            chatApiService = get(),
             database = get()
         )
     }
@@ -134,7 +137,7 @@ val sharedModule = module {
 
     viewModel { params ->
         ChatViewModel(
-            receiverId = params.get(),
+            otherUserId = params.get(),
             authRepository = get(),
             chatRepository = get()
         )

@@ -1,6 +1,7 @@
 package com.zg.sanctuary.core.data.network
 
-const val BASE_IP = "10.0.2.2"
+//const val BASE_IP = "10.0.2.2"
+const val BASE_IP = "localhost"
 
 const val BASE_URL = "http://$BASE_IP:8080"
 const val SOCKET_PORT = 8080
