@@ -9,7 +9,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -26,6 +25,7 @@ import com.zg.sanctuary.auth.presentation.personal_information.PersonalInformati
 import com.zg.sanctuary.chat.presentation.ChatRoute
 import com.zg.sanctuary.chat.presentation.ChatViewModel
 import com.zg.sanctuary.conversations.presentation.ConversationsRoute
+import com.zg.sanctuary.conversations.presentation.ConversationsViewModel
 import com.zg.sanctuary.core.BeVietnamProTypography
 import com.zg.sanctuary.home.presentation.HomeRoute
 import com.zg.sanctuary.home.presentation.HomeViewModel
@@ -144,8 +144,8 @@ fun App() {
                     },
                     onNavigateToChat = {
                         // TODO: - Should navigate to conversation screen.
-                        navController.navigate(AppRoute.Chat(0))
-                        //navController.navigate(AppRoute.Conversation)
+                        //navController.navigate(AppRoute.Chat(0))
+                        navController.navigate(AppRoute.Conversation)
                     }
                 )
             }
@@ -157,9 +157,17 @@ fun App() {
                 popExitTransition = { popExitTransition }
             ) {
 
-                // TODO: - Set up View Model Here
+                val viewModel = koinViewModel<ConversationsViewModel>()
 
-                ConversationsRoute()
+                ConversationsRoute(
+                    viewModel = viewModel,
+                    onNavigateBack = {
+                        navController.navigateUp()
+                    },
+                    onNavigateToChat = {
+                        navController.navigate(AppRoute.Chat(it))
+                    }
+                )
             }
 
             // Chat

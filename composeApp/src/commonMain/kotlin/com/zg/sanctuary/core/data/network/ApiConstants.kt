@@ -20,3 +20,6 @@ const val ENDPOINT_COMMENTS = "/api/comments"
 const val ENDPOINT_FRIEND_REQUESTS = "/api/friend_requests"
 const val ENDPOINT_ACCEPT_FRIEND_REQUEST = "/api/accept_friend_request"
 const val ENDPOINT_FRIENDS = "/api/friends"
+
+const val ENDPOINT_GET_CONVERSATIONS = "/api/conversations"
+const val ENDPOINT_GET_CHAT_MESSAGE_HISTORY = "/api/chats"

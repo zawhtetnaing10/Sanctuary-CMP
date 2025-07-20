@@ -10,6 +10,10 @@ import com.zg.sanctuary.auth.presentation.personal_information.PersonalInformati
 import com.zg.sanctuary.chat.data.network.WebsocketService
 import com.zg.sanctuary.chat.data.repositories.ChatRepository
 import com.zg.sanctuary.chat.presentation.ChatViewModel
+import com.zg.sanctuary.conversations.data.network.ConversationsApiService
+import com.zg.sanctuary.conversations.data.network.impls.ConversationsApiServiceImpl
+import com.zg.sanctuary.conversations.data.repository.ConversationsRepository
+import com.zg.sanctuary.conversations.presentation.ConversationsViewModel
 import com.zg.sanctuary.core.persistence.DatabaseFactory
 import com.zg.sanctuary.core.persistence.SanctuaryDatabase
 import com.zg.sanctuary.friends.data.network.FriendsApiService
@@ -87,6 +91,12 @@ val sharedModule = module {
         FriendsRepository(apiService = get(), database = get())
     }
 
+    // Conversations
+    single<ConversationsApiService> { ConversationsApiServiceImpl() }
+    single<ConversationsRepository>{
+        ConversationsRepository(conversationsApiService = get(), database = get())
+    }
+
     // Chat
     single<WebsocketService> { WebsocketService() }
     single<ChatRepository> {
@@ -129,4 +139,6 @@ val sharedModule = module {
             chatRepository = get()
         )
     }
+
+    viewModelOf(::ConversationsViewModel)
 }
