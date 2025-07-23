@@ -14,6 +14,7 @@ import coil3.compose.AsyncImage
 import com.zg.sanctuary.core.MARGIN_CARD_MEDIUM_2
 import com.zg.sanctuary.core.MARGIN_MEDIUM_2
 import com.zg.sanctuary.core.POST_IMAGE_HEIGHT
+import com.zg.sanctuary.core.TEXT_REGULAR
 import com.zg.sanctuary.posts.domain.Post
 import org.jetbrains.compose.resources.painterResource
 import sanctuary.composeapp.generated.resources.Res
@@ -25,6 +26,7 @@ fun PostContent(post: Post, onPostClicked: () -> Unit, modifier: Modifier = Modi
     Column(modifier = modifier) {
         Text(
             post.content,
+            fontSize = TEXT_REGULAR,
             modifier = Modifier.padding(horizontal = MARGIN_MEDIUM_2)
                 .clickable(indication = null, interactionSource = null, onClick = { onPostClicked() })
         )

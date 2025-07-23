@@ -52,7 +52,9 @@ fun ChatRoute(
                 }
 
                 is ChatEvents.ScrollToBottom -> {
-                    chatListState.animateScrollToItem(index = it.lastIndex)
+                    if(it.lastIndex > 0){
+                        chatListState.animateScrollToItem(index = it.lastIndex)
+                    }
                 }
             }
         }

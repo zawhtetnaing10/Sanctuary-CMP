@@ -101,6 +101,9 @@ class PostDetailsViewModel(
                             // Send clear focus event
                             viewModelScope.launch {
                                 _events.send(PostDetailsEvent.RemoveFocus)
+                                _state.value.comments?.let {
+                                    _events.send(PostDetailsEvent.ScrollToBottom(it.lastIndex))
+                                }
                             }
 
                         }, onFailure = { errMsg ->

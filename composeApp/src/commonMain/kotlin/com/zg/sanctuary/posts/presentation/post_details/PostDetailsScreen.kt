@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -27,6 +29,7 @@ import com.zg.sanctuary.posts.presentation.components.SortCommentsDropDown
 import com.zg.sanctuary.posts.presentation.components.WriteComment
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalFocusManager
+import com.zg.sanctuary.core.BOTTOM_SPACING_CHAT
 import com.zg.sanctuary.posts.presentation.components.LikeCommentAndShareButtons
 import com.zg.sanctuary.posts.presentation.components.PostContent
 import kotlinx.coroutines.flow.collectLatest
@@ -40,6 +43,9 @@ fun PostDetailsRoute(
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     val focusManager = LocalFocusManager.current
+
+    val scrollState = rememberLazyListState()
+
 
     LaunchedEffect(Unit) {
         viewModel.events.collectLatest {
@@ -55,12 +61,19 @@ fun PostDetailsRoute(
                 is PostDetailsEvent.NavigateToUserProfile -> {
                     onNavigateToProfile(it.userId)
                 }
+
+                is PostDetailsEvent.ScrollToBottom -> {
+                    if(it.lastIndex > 0){
+                        scrollState.animateScrollToItem(index = it.lastIndex)
+                    }
+                }
             }
         }
     }
 
     PostDetailsScreen(
         state = state,
+        scrollState = scrollState,
         onAction = {
             viewModel.handleAction(it)
         }
@@ -70,6 +83,7 @@ fun PostDetailsRoute(
 @Composable
 fun PostDetailsScreen(
     state: PostDetailsState,
+    scrollState: LazyListState,
     onAction: (PostDetailsAction) -> Unit
 ) {
     if (state.post != null)
@@ -90,7 +104,7 @@ fun PostDetailsScreen(
 
             Box(modifier = Modifier.fillMaxSize()) {
                 // Body
-                LazyColumn(modifier = Modifier.padding(innerPadding)) {
+                LazyColumn(state = scrollState, modifier = Modifier.padding(innerPadding)) {
                     item {
                         // Post Data
                         Column(modifier = Modifier.padding(top = MARGIN_MEDIUM_2)) {
@@ -115,25 +129,30 @@ fun PostDetailsScreen(
                         }
                     }
 
-                    item {
-                        Spacer(modifier = Modifier.height(MARGIN_MEDIUM_3))
-                    }
-
-                    if (state.comments != null && state.comments.isNotEmpty())
-                        item {
-                            // Sort comment list
-                            SortCommentsDropDown(modifier = Modifier.padding(horizontal = MARGIN_MEDIUM_2))
-                        }
+//                    item {
+//                        Spacer(modifier = Modifier.height(MARGIN_MEDIUM_3))
+//                    }
+//
+//                    if (state.comments != null && state.comments.isNotEmpty())
+//                        item {
+//                            // Sort comment list
+//                            SortCommentsDropDown(modifier = Modifier.padding(horizontal = MARGIN_MEDIUM_2))
+//                        }
 
                     item {
                         Spacer(modifier = Modifier.height(MARGIN_MEDIUM_2))
                     }
 
                     // Comment List
-                    if (state.comments != null && state.comments.isNotEmpty())
+                    if (state.comments != null && state.comments.isNotEmpty()) {
                         items(state.comments.count()) { index ->
                             CommentListItem(comment = state.comments[index])
                         }
+                    }
+
+                    item {
+                        Spacer(modifier = Modifier.height(BOTTOM_SPACING_CHAT))
+                    }
                 }
 
                 // Write Comment

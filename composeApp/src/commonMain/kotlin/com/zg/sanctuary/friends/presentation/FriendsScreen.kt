@@ -27,6 +27,7 @@ import sanctuary.composeapp.generated.resources.friend_requests
 import sanctuary.composeapp.generated.resources.friends
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import com.zg.sanctuary.core.MARGIN_LARGE
 import com.zg.sanctuary.core.presentation.components.dialogs.ErrorDialog
 import com.zg.sanctuary.core.presentation.components.dialogs.LoadingDialog
 import kotlinx.coroutines.flow.collectLatest
@@ -147,7 +148,7 @@ fun FriendsScreen(
             Box(modifier = Modifier.fillMaxSize()) {
                 Text(
                     stringResource(Res.string.friends_empty),
-                    modifier = Modifier.align(Alignment.Center)
+                    modifier = Modifier.align(Alignment.Center).padding(MARGIN_LARGE)
                 )
             }
         }

@@ -36,7 +36,7 @@ class ConversationsViewModel(
             // Get Conversations
             conversationsRepository.getConversations (
                 onSuccess = { conversations ->
-                    _state.update { it.copy(conversations = conversations, isLoading = false) }
+                    _state.update { it.copy(conversations = conversations.reversed(), isLoading = false) }
                 },
                 onFailure = { errMsg ->
                     _state.update { it.copy(isLoading = false, error = errMsg) }

@@ -20,6 +20,7 @@ object DateUtils {
         val duration = now - serverInstant
 
         return when {
+            duration.inWholeSeconds < 30 -> "a moment ago"
             duration.inWholeMinutes < 1 -> "${duration.inWholeSeconds} seconds ago"
             duration.inWholeHours < 1 -> "${duration.inWholeMinutes} minutes ago"
             duration.inWholeHours < 24 -> "${duration.inWholeHours} hours ago"
