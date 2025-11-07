@@ -25,7 +25,7 @@ Clone the repository
 
 Open Andorid Studio and run the app. (No additional configuration required)
 
-# Features
+# Usage and Features
 Account Management: Secure user registration, login, and profile management.
 
 Post Interaction: Browse, create, like, and comment on posts.
